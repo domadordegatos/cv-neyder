@@ -1,0 +1,26 @@
+.circular {
+    display: inline-block;
+    position: relative;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  
+  .circular img {
+    width: auto;
+    height: 100%;
+    /* margin-left: -50px; */
+  }
+  .raya{
+    border-bottom: 8px solid white;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    font-weight: bold;
+}
+p{
+  text-align: justify;
+}
+.contenedor{
+  margin:0 1rem 0 1rem;
+}
