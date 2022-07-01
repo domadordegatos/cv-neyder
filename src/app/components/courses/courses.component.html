@@ -1,0 +1,102 @@
+<div class="swim">
+  <div class="container">
+    <div class="row pb-2">
+      <div class="swim-illustration col-sm-12">
+        <div class="row mt-2 text-white fuente" style="text-align: center;">
+          <div class="col-sm-6">
+            <h2 class=""><b>Courses</b> </h2>
+            <img class="raya"
+              src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fc5b257ec928464e3515b7ad11484009b-icono-de-sombrero-y-diploma-de-graduacion.png?alt=media&token=a118b743-b380-47e8-a49c-bf582c09f500"
+              alt="" width="100" height="100">
+
+            <table class="table text-white mt-4">
+              <tr *ngFor="let item of courses$ | async ; index as i" class="row align-items-start">
+                <td class="col-sm-8 text-start">{{item.title}}</td>
+                <td class="col-sm-3"><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
+                <td class="col-sm-1"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
+                    attr.data-bs-target="#exampleModal{{i}}"></i></td>
+              </tr>
+            </table>
+
+          </div>
+          <div class="col-sm-6">
+            <h2 class=""><b>Awards</b> </h2>
+            <img class="raya"
+              src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fmedalla-2.png?alt=media&token=a7ea2abf-fcda-4263-ad92-8b8b93132a5a"
+              alt="" width="100" height="100">
+
+            <table class="table text-white mt-4">
+              <tr *ngFor="let item of awards$ | async ; index as i" class="row align-items-start">
+                <td class="col-sm-7 text-start">{{item.title}}-{{item.mode}}</td>
+                <td class="col-sm-1">{{item.place}}</td>
+                <td class="col-sm-3"><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
+                <td class="col-sm-1"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
+                    attr.data-bs-target="#exampleModalaward{{i}}" (click)="openAward(item.id)"></i></td>
+              </tr>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal courses-->
+<div *ngFor="let item of courses$ | async ; index as i" class="modal fade" id="exampleModal{{i}}" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body w-100">
+        <img width="100%" [src]="item.url" [alt]="item.title">
+      </div>
+      <div class="modal-footer">
+        {{item.description}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal awards-->
+<div *ngFor="let item of awards$ | async ; index as i" class="modal fade" id="exampleModalaward{{i}}" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body w-100">
+
+        <div id="carouselExampleControls{{i}}" class="carousel slide carousel-fade" data-bs-ride="carousel" >
+          <div class="carousel-inner" >
+            <div class="carousel-item active">
+              <img *ngFor="let item of awardsIndi$ | async" [src]="item.url" class="d-block w-100" [alt]="item.url">
+            </div>
+            <div class="carousel-item">
+              <img *ngFor="let item of awardsIndi$ | async" [src]="item.img1" class="d-block w-100" [alt]="item.img1">
+            </div>
+            <div class="carousel-item">
+              <img *ngFor="let item of awardsIndi$ | async" [src]="item.img2" class="d-block w-100" [alt]="item.img2">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" attr.data-bs-target="#carouselExampleControls{{i}}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" attr.data-bs-target="#carouselExampleControls{{i}}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+        
+      </div>
+      <div class="modal-footer">
+        {{item.description}}
+      </div>
+    </div>
+  </div>
+</div>
