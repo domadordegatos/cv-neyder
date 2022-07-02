@@ -1,0 +1,23 @@
+<div class="contenedor text-white fuente">
+    <div class="container">
+        <div class="row cardNeyder" *ngFor="let item of dataProfile$ | async">
+            <div class="col-sm-4"><!-- foto -->
+                <img width="30%" [src]="item.imgProfile" [alt]="item.imgProfile">
+            </div>
+            <div class="col-sm-8">
+                <div class="row"><!-- name -->
+                    <div class="col-sm-12">{{item.name}} </div>
+                </div>
+                <div class="row"><!-- age && cellphone -->
+                    <div class="col-sm-3">Age: {{item.age}}</div>
+                    <div class="col-sm-9">Tel: {{item.cellphone}}</div>
+                </div>
+                <div class="row"><div class="col-sm-12">@ - {{item.email1}} </div></div><!-- emails -->
+                <div class="row"><div class="col-sm-12">@ - {{item.email2}} </div></div>
+                <div class="row"><!-- city && departament -->
+                    <div class="col-sm-12">{{item.city}} - {{item.department}} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

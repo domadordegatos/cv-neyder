@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
+import { ContactComponent } from './components/contact/contact.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,8 @@ import { environment } from 'src/environments/environment';
     ProyectsComponent,
     WorksComponent,
     EducationComponent,
-    CoursesComponent
+    CoursesComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

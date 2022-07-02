@@ -1,1 +1,52 @@
-<p>proyects works!</p>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-sm-2 d-flex align-items-center">
+            <div class="contenedor" style="text-align: center;">
+                <h2 class="text-white fuente" style="font-size: 3rem;"><b>Proyects</b></h2>
+                <svg style="color: #d63384;" xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-code-slash" viewBox="0 0 16 16">
+                    <path d="M10.478 1.647a.5.5 0 1 0-.956-.294l-4 13a.5.5 0 0 0 .956.294l4-13zM4.854 4.146a.5.5 0 0 1 0 .708L1.707 8l3.147 3.146a.5.5 0 0 1-.708.708l-3.5-3.5a.5.5 0 0 1 0-.708l3.5-3.5a.5.5 0 0 1 .708 0zm6.292 0a.5.5 0 0 0 0 .708L14.293 8l-3.147 3.146a.5.5 0 0 0 .708.708l3.5-3.5a.5.5 0 0 0 0-.708l-3.5-3.5a.5.5 0 0 0-.708 0z"/>
+                  </svg>
+            </div>
+        </div>
+        <div class="col-sm-10 px-4">
+            <div class="row text-white">
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 pb-4 text-white d-flex justify-content-center">
+                            <img width="10%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fangular-icon-logo.png?alt=media&token=c5ef17dc-6113-4e06-9694-0abeafb0a1f5" alt="">
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let item of ang$ | async">
+                        <div class="col-sm-10">
+                            <li>{{item.title}}</li>
+                        </div>
+                        <div class="col-sm-1">
+                            <i class="bi bi-images"></i>
+                        </div>
+                        <div class="col-sm-1">
+                            <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 text-white">
+                    <div class="row">
+                        <div class="col-sm-12 pb-4 d-flex justify-content-center">
+                            <img width="17%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2FPHP-logo.svg.png?alt=media&token=d03c5a79-511e-4e26-a7e0-6737808cf896" alt="">
+                        </div>
+                    </div>
+                    <div class="row" *ngFor="let item of php$ | async">
+                        <div class="col-sm-10">
+                            <li>{{item.title}}</li>
+                        </div>
+                        <div class="col-sm-1">
+                            <i class="bi bi-images"></i>
+                        </div>
+                        <div class="col-sm-1">
+                            <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

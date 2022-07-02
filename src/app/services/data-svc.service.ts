@@ -3,17 +3,19 @@ import { map, Observable } from 'rxjs';
 import { coursesI } from '../components/models/courses';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { awardsI } from '../components/models/awards';
+import { proyectsI } from '../components/models/proyects';
+import { profileI } from '../components/models/profile';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataSvcService {
-  courses: Observable<coursesI[]>
-  awards: Observable<awardsI[]>
   private courseCollection: AngularFirestoreCollection<coursesI>;
   private awardsCollection: AngularFirestoreCollection<awardsI>;
   private awardsIndiCollection: AngularFirestoreCollection<awardsI>;
-
+  private proyectsCollection: AngularFirestoreCollection<proyectsI>;
+  private dataProfileCollection: AngularFirestoreCollection<profileI>;
+  
   constructor(private readonly afs: AngularFirestore) { }
 
   public getCoursesView(): Observable<coursesI[]>{
@@ -35,7 +37,7 @@ export class DataSvcService {
 
   public getAwardsView(): Observable<awardsI[]>{
           
-    this.awardsCollection = this.afs.collection<awardsI>('awards', p=> p.orderBy('order','asc'));
+    this.awardsCollection = this.afs.collection<awardsI>('awards', p=> p.orderBy('date','desc'));
   
     return this.awardsCollection
       .snapshotChanges()
@@ -67,6 +69,39 @@ export class DataSvcService {
       );
   }
 
+  public getLenguageView(lenguage:string): Observable<proyectsI[]>{
+          
+    this.proyectsCollection = this.afs.collection<proyectsI>('proyects', p=> p.where('lenguage','==',lenguage));
+  
+    return this.proyectsCollection
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data() as proyectsI;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
+  }
+
+  public getDataProfile(): Observable<profileI[]>{
+          
+    this.dataProfileCollection = this.afs.collection<profileI>('profile');
+  
+    return this.dataProfileCollection
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data() as profileI;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
+  }
 
 }
 
