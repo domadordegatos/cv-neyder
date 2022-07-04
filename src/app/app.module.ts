@@ -15,6 +15,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { ContactComponent } from './components/contact/contact.component';
+import { StickyComponent } from './components/sticky/sticky.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { ContactComponent } from './components/contact/contact.component';
     WorksComponent,
     EducationComponent,
     CoursesComponent,
-    ContactComponent
+    ContactComponent,
+    StickyComponent
   ],
   imports: [
     BrowserModule,

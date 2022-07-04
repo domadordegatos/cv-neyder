@@ -1,18 +1,26 @@
 .contenedor{
     background: #190649;
 }
+.container{
+  padding-top: 0 !important;
+}
 .fuente{
     font-family: 'Manrope', sans-serif;
   }
   .cardNeyder{
-    border: solid 1px white;
+    //border: solid 1px white;
     padding: 2rem 0 2rem 0;
-    margin-top: 2rem;
-
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+    width: 70%;
+    height: fit-content;
+    font-size: 1.3rem;
     background: linear-gradient(-45deg,
-    #23a6d5, #0088bc, #004283, #478aff, #ffca28);
+    #ffffff, #0088bc, #004283, #478aff, #ffca28);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
+
+    border-radius: 25px;
   }
   @keyframes gradient {
 	0% {
@@ -27,5 +35,16 @@
 }
   .container{
     padding-top: 2rem;
-    height: 20rem;
+  }
+  .text-data{
+    text-align: end;
+  }
+  .text-data{
+    padding: 3rem 4rem 0 0; 
+  }
+  a{
+    text-decoration: none;
+    animation: none;
+    color: white;
+    padding-left: 0.7rem;
   }

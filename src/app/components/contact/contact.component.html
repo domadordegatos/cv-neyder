@@ -1,21 +1,29 @@
 <div class="contenedor text-white fuente">
-    <div class="container">
-        <div class="row cardNeyder" *ngFor="let item of dataProfile$ | async">
-            <div class="col-sm-4"><!-- foto -->
-                <img width="30%" [src]="item.imgProfile" [alt]="item.imgProfile">
+    <div class="container d-flex justify-content-center">
+        <div class="row cardNeyder d-flex justify-content-center" *ngFor="let item of dataProfile$ | async">
+            <div class="col-sm-6" style="text-align: center;"><!-- foto -->
+                <img class="rounded-circle border border-white" width="70%" height="100%" [src]="item.imgProfile" [alt]="item.imgProfile">
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-6 text-data">
                 <div class="row"><!-- name -->
                     <div class="col-sm-12">{{item.name}} </div>
                 </div>
                 <div class="row"><!-- age && cellphone -->
-                    <div class="col-sm-3">Age: {{item.age}}</div>
-                    <div class="col-sm-9">Tel: {{item.cellphone}}</div>
+                    <div class="col-sm-6">Age: {{item.age}}</div>
+                    <div class="col-sm-6">Tel: {{item.cellphone}}</div>
                 </div>
                 <div class="row"><div class="col-sm-12">@ - {{item.email1}} </div></div><!-- emails -->
                 <div class="row"><div class="col-sm-12">@ - {{item.email2}} </div></div>
                 <div class="row"><!-- city && departament -->
                     <div class="col-sm-12">{{item.city}} - {{item.department}} </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 d-flex justify-content-end">
+                        <p>contact me</p>
+                        <a target="_blank" href="https://wa.link/h18337"><i class="bi bi-whatsapp"></i></a>
+                        <a target="_blank" href="https://www.instagram.com/domador_de_gatos/"><i class="bi bi-instagram"></i></a>
+                        <a target="_blank" href="https://web.facebook.com/domadorofcats/"><i class="bi bi-facebook"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
