@@ -15,6 +15,7 @@ export class DataSvcService {
   private awardsIndiCollection: AngularFirestoreCollection<awardsI>;
   private proyectsCollection: AngularFirestoreCollection<proyectsI>;
   private dataProfileCollection: AngularFirestoreCollection<profileI>;
+  private proyectsIndiCollection: AngularFirestoreCollection<proyectsI>;
   
   constructor(private readonly afs: AngularFirestore) { }
 
@@ -102,6 +103,24 @@ export class DataSvcService {
         )
       );
   }
+
+  public getDataProyectsImage(id:string): Observable<proyectsI[]>{
+          
+    this.proyectsIndiCollection = this.afs.collection<proyectsI>('proyects', p=> p.where('id','==',id));
+  
+    return this.proyectsIndiCollection
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data() as proyectsI;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
+  }
+
 
 }
 

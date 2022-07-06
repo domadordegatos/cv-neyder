@@ -16,12 +16,13 @@
                             <img width="10%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fangular-icon-logo.png?alt=media&token=c5ef17dc-6113-4e06-9694-0abeafb0a1f5" alt="">
                         </div>
                     </div>
-                    <div class="row" *ngFor="let item of ang$ | async">
+                    <div class="row" *ngFor="let item of ang$ | async; index as i">
                         <div class="col-sm-10">
                             <li>{{item.title}}</li>
                         </div>
                         <div class="col-sm-1">
-                            <i class="bi bi-images"></i>
+                            <i class="bi bi-images" data-bs-toggle="modal"
+                            attr.data-bs-target="#modalproyectsang{{i}}" (click)="openImages(item.id)"></i>
                         </div>
                         <div class="col-sm-1">
                             <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
@@ -34,12 +35,13 @@
                             <img width="17%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2FPHP-logo.svg.png?alt=media&token=d03c5a79-511e-4e26-a7e0-6737808cf896" alt="">
                         </div>
                     </div>
-                    <div class="row" *ngFor="let item of php$ | async">
+                    <div class="row" *ngFor="let item of php$ | async; index as i">
                         <div class="col-sm-10">
                             <li>{{item.title}}</li>
                         </div>
                         <div class="col-sm-1">
-                            <i class="bi bi-images"></i>
+                            <i class="bi bi-images" data-bs-toggle="modal"
+                            attr.data-bs-target="#modalproyectsphp{{i}}" (click)="openImages(item.id)"></i>
                         </div>
                         <div class="col-sm-1">
                             <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
@@ -49,4 +51,74 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal php-->
+<div *ngFor="let item of php$ | async ; index as i" class="modal fade" id="modalproyectsphp{{i}}" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body w-100">
+        
+        <div id="carouselExampleControlsproyects{{i}}" class="carousel slide carousel-fade" data-bs-ride="carousel" >
+          <div class="carousel-inner" >
+            <div class="carousel-item active">
+              <img *ngFor="let item of proyectsIndi$ | async" [src]="item.img2" class="d-block w-100" [alt]="item.img1">
+            </div>
+            <div class="carousel-item active">
+              <img *ngFor="let item of proyectsIndi$ | async" [src]="item.img1" class="d-block w-100" [alt]="item.img1">
+            </div>
+            <div class="carousel-item">
+              <img *ngFor="let item of proyectsIndi$ | async" [src]="item.img2" class="d-block w-100" [alt]="item.img2">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" attr.data-bs-target="#carouselExampleControlsproyects{{i}}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" attr.data-bs-target="#carouselExampleControlsproyects{{i}}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal ang-->
+<div *ngFor="let item of ang$ | async ; index as i" class="modal fade" id="modalproyectsang{{i}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body w-100">
+        
+        <div id="carouselExampleControlsproyectss{{i}}" class="carousel slide carousel-fade" data-bs-ride="carousel" >
+          <div class="carousel-inner" >
+            <div class="carousel-item active">
+              <img *ngFor="let item of proyectsIndi$ | async" [src]="item.img1" class="d-block w-100" [alt]="item.img1">
+            </div>
+            <div class="carousel-item">
+              <img *ngFor="let item of proyectsIndi$ | async" [src]="item.img2" class="d-block w-100" [alt]="item.img2">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" attr.data-bs-target="#carouselExampleControlsproyectss{{i}}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" attr.data-bs-target="#carouselExampleControlsproyectss{{i}}" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

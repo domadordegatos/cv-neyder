@@ -16,6 +16,9 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from 'src/environments/environment';
 import { ContactComponent } from './components/contact/contact.component';
 import { StickyComponent } from './components/sticky/sticky.component';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import 'animate.css';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +36,7 @@ import { StickyComponent } from './components/sticky/sticky.component';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireStorageModule,
+    TooltipModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
