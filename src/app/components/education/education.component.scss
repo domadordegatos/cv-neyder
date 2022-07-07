@@ -8,3 +8,8 @@
 .fuente{
     font-family: 'Manrope', sans-serif;
   }
+  @media (max-width: 575.98px) {
+    .title_edu{font-size: 1.5rem !important; text-align: center; margin-top: 1rem;}
+    .encoger_tec{margin-top: 0px !important;}
+    .img_edu{display: none !important;}
+  }

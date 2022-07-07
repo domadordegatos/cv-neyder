@@ -14,3 +14,9 @@
   code{
     color: yellow;
   }
+  @media (max-width: 575.98px) {
+    .text_end{text-align: end !important;}
+    .text_start{text-align: left !important;}
+    .text-center{text-align: center !important;}
+    .text-start{text-align: center !important;}
+  }

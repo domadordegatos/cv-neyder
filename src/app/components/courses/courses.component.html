@@ -3,34 +3,37 @@
     <div class="row pb-2">
       <div class="swim-illustration col-sm-12">
         <div class="row mt-2 text-white fuente" style="text-align: center;">
-          <div class="col-sm-6">
-            <h2 class=""><b>Courses</b> </h2>
+          
+            <div class="col-sm-6" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="500">
+            <h2><b>Courses</b></h2>|
             <img class="raya"
               src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fc5b257ec928464e3515b7ad11484009b-icono-de-sombrero-y-diploma-de-graduacion.png?alt=media&token=a118b743-b380-47e8-a49c-bf582c09f500"
               alt="" width="100" height="100">
 
-            <table class="table text-white mt-4">
+            
+              <table class="table text-white mt-4" data-aos="fade-right" data-aos-offset="100" data-aos-easing="ease-in-sine">
               <tr *ngFor="let item of courses$ | async ; index as i" class="row align-items-start">
                 <td class="col-sm-8 text-start">{{item.title}}</td>
-                <td class="col-sm-3"><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
-                <td class="col-sm-1"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
+                <td class="col-sm-3 col text_end"><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
+                <td class="col-sm-1 col text_start"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
                     attr.data-bs-target="#exampleModal{{i}}"></i></td>
               </tr>
             </table>
 
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-6" >
+            <div class="col-sm-6" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="500">
             <h2 class=""><b>Awards</b> </h2>
             <img class="raya"
               src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fmedalla-2.png?alt=media&token=a7ea2abf-fcda-4263-ad92-8b8b93132a5a"
               alt="" width="100" height="100">
 
-            <table class="table text-white mt-4">
+              <table class="table text-white mt-4" data-aos="fade-left" data-aos-offset="100" data-aos-easing="ease-in-sine">
               <tr *ngFor="let item of awards$ | async ; index as i" class="row align-items-start">
                 <td class="col-sm-7 text-start">{{item.title}}-{{item.mode}}</td>
-                <td class="col-sm-1">{{item.place}}</td>
-                <td class="col-sm-3"><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
-                <td class="col-sm-1"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
+                <td class="col-lg-1 col text_end">{{item.place}}</td>
+                <td class="col-lg-3 col-5 "><b><code>{{item.date["seconds"] * 1000 | date: 'mediumDate'}}</code></b></td>
+                <td class="col-lg-1 col text_start"><i style="cursor: pointer;" class="bi bi-eye" data-bs-toggle="modal"
                     attr.data-bs-target="#exampleModalaward{{i}}" (click)="openAward(item.id)"></i></td>
               </tr>
             </table>

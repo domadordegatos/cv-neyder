@@ -1,17 +1,4 @@
-.circular {
-    display: inline-block;
-    position: relative;
-    width: 400px;
-    height: 400px;
-    overflow: hidden;
-    border-radius: 50%;
-  }
-  
-  .circular img {
-    width: auto;
-    height: 100%;
-    /* margin-left: -50px; */
-  }
+
   .raya{
     border-bottom: 8px solid white;
     border-bottom-left-radius: 5px;
@@ -42,3 +29,22 @@ p{
 .an11{animation-delay: 1.0s;}
 .anphoto{animation-delay: 0.6;}
 
+@media (min-width: 1200px) {
+  .img_convert{
+    width: 50%;
+  }
+}
+@media (max-width: 575.98px) {
+  .contenedor{margin-top: 0 !important;}
+  h2{font-size: 2rem !important;}
+  p{font-size: 1rem !important;}
+  .mt-3{margin-top: 0px !important; }
+  .img_convert{width: 80% !important; }
+  .profile{margin-top: 1rem !important;}
+}
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .img_convert{width: 50% !important; }
+  h2{margin-top: 0px !important; }
+  .profile{margin-top: 1rem !important; width: 50% !important;}
+
+}

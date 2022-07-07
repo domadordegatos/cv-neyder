@@ -13,3 +13,10 @@
 .fuente{
     font-family: 'Manrope', sans-serif;
   }
+  @media (max-width: 575.98px) {
+    .img1{display: none;}
+    h2{text-align: center; font-size: 1.5rem !important; padding-top: 1rem !important;}
+    .c_principal{margin-top: 0px !important;}
+    .raya{border-bottom: 3px solid white !important ;}
+    .contenedor{text-align: center;}
+  }

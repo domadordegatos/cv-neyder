@@ -2,11 +2,13 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DataSvcService } from 'src/app/services/data-svc.service';
 import { proyectsI } from '../models/proyects';
+import AOS from "aos";
 
 @Component({
   selector: 'app-proyects',
   templateUrl: './proyects.component.html',
   styleUrls: ['./proyects.component.scss'],
+  animations: ['./animation.js']
 })
 export class ProyectsComponent implements OnInit {
   public php$: Observable<proyectsI[]>;
@@ -15,6 +17,7 @@ export class ProyectsComponent implements OnInit {
   constructor(private dataSvc: DataSvcService) { }
 
   ngOnInit(): void {
+    AOS.init();
     this.php$ = this.dataSvc.getLenguageView("php");
     this.ang$ = this.dataSvc.getLenguageView("ang");
   }

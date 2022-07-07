@@ -12,3 +12,12 @@
     text-decoration: none;
     color: white;
   }
+  @media (max-width: 575.98px) {
+    .alineacion{display: flex !important;}
+    .align_center{}
+    svg{width: 30px !important; height: 30px !important; margin-left: 0.5rem;}
+    .fuente{font-size: 1.5rem !important;}
+    li{list-style: none; text-align: center;}
+    .text_end{text-align: end !important;}
+    .img_php{margin-top: 1rem;}
+  }

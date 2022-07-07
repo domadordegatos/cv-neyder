@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { DataSvcService } from 'src/app/services/data-svc.service';
 import { awardsI } from '../models/awards';
 import { coursesI } from '../models/courses';
+import AOS from "aos";
 
 @Component({
   selector: 'app-courses',
@@ -16,6 +17,7 @@ export class CoursesComponent implements OnInit {
   constructor(private dataSvc: DataSvcService) { }
 
   ngOnInit(): void {
+    AOS.init();
     this.courses$ = this.dataSvc.getCoursesView();
     this.awards$ = this.dataSvc.getAwardsView();
   }
