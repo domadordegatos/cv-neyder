@@ -20,3 +20,18 @@
     .raya{border-bottom: 3px solid white !important ;}
     .contenedor{text-align: center;}
   }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .img1{width: 60%; height: 70%;}
+    h2{font-size: 2rem !important; padding-top: 1rem !important;}
+    .container_img{display: flex; justify-content: center; align-items: center;}
+  }
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    .img1{display: none;}
+    h2{text-align: center; font-size: 2rem !important; padding-top: 1rem !important;}
+    .c_principal{margin-top: 0px !important;}
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .img1{display: none;}
+    h2{text-align: center; font-size: 2rem !important; padding-top: 1rem !important;}
+    .c_principal{margin-top: 0px !important;}
+  }

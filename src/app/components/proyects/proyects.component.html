@@ -1,6 +1,6 @@
 <div class="container my-3">
-    <div class="row">
-        <div class="col-sm-2 d-flex align-items-center align_center justify-content-center" data-aos="fade-up">
+    <div class="row row-cols-lg-1 row-cols-sm-1">
+        <div class="col-lg-12 col-sm-12 d-flex align-items-center align_center justify-content-center" data-aos="fade-up">
             <div class="contenedor" >
               <div class="alineacion">
                 <h2 class="text-white fuente proyects_name" style="font-size: 3rem;"><b>Proyects</b></h2>
@@ -10,23 +10,23 @@
               </div>
             </div>
         </div>
-        <div class="col-sm-10 px-4">
+        <div class="col-sm-12 px-4">
             <div class="row text-white">
                 <div class="col-sm-6">
                     <div class="row" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="700">
                       <div class="col-sm-12 pb-4 text-white d-flex justify-content-center">
-                            <img width="10%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2Fangular-icon-logo.png?alt=media&token=c5ef17dc-6113-4e06-9694-0abeafb0a1f5" alt="">
+                            <img class="img_logos" width="10%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/logos_lenguajes%2Fangul.png?alt=media&token=eb0fe3fe-f38a-4cb6-8158-2b2e73648b7a" alt="">
                         </div>
                     </div>
-                    <div class="row" *ngFor="let item of ang$ | async; index as i" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="700">
-                        <div class="col-sm-10">
+                    <div class="row row-cols-sm-1" *ngFor="let item of ang$ | async; index as i" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="700">
+                        <div class="col-sm-12">
                             <li>{{item.title}}</li>
                         </div>
-                        <div class="col-sm-1 col text_end">
+                        <div class="col-sm-6 col text_end">
                             <i class="bi bi-images" data-bs-toggle="modal"
                             attr.data-bs-target="#modalproyectsang{{i}}" (click)="openImages(item.id)"></i>
                         </div>
-                        <div class="col-sm-1 col">
+                        <div class="col-sm-6 col">
                             <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
                         </div>
                     </div>
@@ -34,18 +34,18 @@
                 <div class="col-sm-6 text-white img_php">
                     <div class="row" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">
                         <div class="col-sm-12 pb-4 d-flex justify-content-center">
-                            <img width="17%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/media%2FPHP-logo.svg.png?alt=media&token=d03c5a79-511e-4e26-a7e0-6737808cf896" alt="">
+                            <img class="img_logos" width="17%" src="https://firebasestorage.googleapis.com/v0/b/cv-neyder.appspot.com/o/logos_lenguajes%2FPHP-logo.svg.png?alt=media&token=42861fd0-ffba-45cb-bfd1-53b8d018d70f" alt="">
                         </div>
                     </div>
-                    <div class="row" *ngFor="let item of php$ | async; index as i"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="700">
-                        <div class="col-lg-10">
+                    <div class="row row-cols-sm-1" *ngFor="let item of php$ | async; index as i"  data-aos="fade-down" data-aos-easing="linear" data-aos-duration="700">
+                        <div class="col-sm-12 col-lg-10">
                             <li>{{item.title}}</li>
                         </div>
-                        <div class="col-sm-1 col text_end">
+                        <div class="col-sm-6 col text_end">
                             <i class="bi bi-images" data-bs-toggle="modal"
                             attr.data-bs-target="#modalproyectsphp{{i}}" (click)="openImages(item.id)"></i>
                         </div>
-                        <div class="col-sm-1 col">
+                        <div class="col-sm-6 col">
                             <a [href]="item.url" target="_blank"><i class="bi bi-eye"></i></a>
                         </div>
                     </div>

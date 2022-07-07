@@ -13,3 +13,16 @@
     .encoger_tec{margin-top: 0px !important;}
     .img_edu{display: none !important;}
   }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .title_edu{font-size: 2rem !important; margin-top: 1rem;}
+    .container_img{display: flex; justify-content: center; align-items: center;}
+    .img_edu{width: 90%; height: 60%;}
+  }
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    .title_edu{font-size: 2rem !important; text-align: center; margin-top: 1rem;}
+    .img_edu{display: none !important;}
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .title_edu{font-size: 2rem !important; text-align: center; margin-top: 1rem;}
+    .img_edu{display: none !important;}
+  }

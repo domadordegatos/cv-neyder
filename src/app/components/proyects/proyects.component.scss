@@ -14,10 +14,25 @@
   }
   @media (max-width: 575.98px) {
     .alineacion{display: flex !important;}
-    .align_center{}
     svg{width: 30px !important; height: 30px !important; margin-left: 0.5rem;}
     .fuente{font-size: 1.5rem !important;}
     li{list-style: none; text-align: center;}
     .text_end{text-align: end !important;}
     .img_php{margin-top: 1rem;}
+  }
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .alineacion{display: flex !important;}
+    svg{width: 60px !important; height: 60px !important; margin-left: 0.5rem;}
+  }
+  @media (min-width: 576px) and (max-width: 767.98px) {
+    .alineacion{display: flex !important;}
+    svg{width: 50px !important; height: 50px !important; margin-left: 0.5rem;}
+    .img_logos{width: 30%; padding-top: 1rem;}
+    .text_end{text-align: end !important;}
+  }
+  @media (min-width: 768px) and (max-width: 991.98px) {
+    .alineacion{display: flex !important;}
+    svg{width: 50px !important; height: 50px !important; margin-left: 0.5rem;}
+    .img_logos{width: 20%; padding-top: 1rem;}
+    .text_end{text-align: end !important;}
   }

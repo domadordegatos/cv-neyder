@@ -7,8 +7,7 @@ import AOS from "aos";
 @Component({
   selector: 'app-proyects',
   templateUrl: './proyects.component.html',
-  styleUrls: ['./proyects.component.scss'],
-  animations: ['./animation.js']
+  styleUrls: ['./proyects.component.scss']
 })
 export class ProyectsComponent implements OnInit {
   public php$: Observable<proyectsI[]>;
