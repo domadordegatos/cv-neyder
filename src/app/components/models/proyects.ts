@@ -1,4 +1,5 @@
 export interface proyectsI {
+[x: string]: any;
     title:string;
     description:string;
     id?:string;
@@ -7,4 +8,6 @@ export interface proyectsI {
     img1:string;
     img2:string;
     lenguage:string;
+    tools?:string[];
+    urlgit?:string;
   }

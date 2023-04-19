@@ -18,6 +18,10 @@ import { ContactComponent } from './components/contact/contact.component';
 import { StickyComponent } from './components/sticky/sticky.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import 'animate.css';
+import { HomeComponent } from './components/home/home.component';
+import { BubleComponent } from './components/buble/buble.component';
+import { ProyectosComponent } from './components/proyectos/proyectos.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +32,11 @@ import 'animate.css';
     EducationComponent,
     CoursesComponent,
     ContactComponent,
-    StickyComponent
+    StickyComponent,
+    HomeComponent,
+    BubleComponent,
+    ProyectosComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -87,6 +87,23 @@ export class DataSvcService {
       );
   }
 
+  public getProyectsLenguages(): Observable<proyectsI[]>{
+          
+    this.proyectsCollection = this.afs.collection<proyectsI>('proyects');
+  
+    return this.proyectsCollection
+      .snapshotChanges()
+      .pipe(
+        map(actions =>
+          actions.map(a => {
+            const data = a.payload.doc.data() as proyectsI;
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          })
+        )
+      );
+  }
+
   public getDataProfile(): Observable<profileI[]>{
           
     this.dataProfileCollection = this.afs.collection<profileI>('profile');
