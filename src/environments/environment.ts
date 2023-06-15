@@ -14,6 +14,17 @@ export const environment = {
     appId: "1:634202452592:web:19d51cee862fbcb4a97ab5"
   }
 };
+/* export const environment = {
+  production: false,
+  firebaseConfig:{
+    apiKey: "AIzaSyADmuVkdwhkykflwblxMT62ETNXQD3Ecec",
+  authDomain: "hv-neyder.firebaseapp.com",
+  projectId: "hv-neyder",
+  storageBucket: "hv-neyder.appspot.com",
+  messagingSenderId: "29800745991",
+  appId: "1:29800745991:web:281d97eb8e73837cd8eea2"
+  }
+}; */
 
 /*
  * For easier debugging in development mode, you can import the following file

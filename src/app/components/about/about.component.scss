@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+label{
+  font-family: 'Archivo', sans-serif;
+  font-size: 3rem;
+}
+
+.text-etiqueta{
+  font-size: 1.3rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.giant{
+  font-size: 4.5rem;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 0px;
+}
+@media (min-width: 0px) and (max-width: 1200px) {
+  .puntaje{display: flex !important;}
+}
+@media (min-width: 768px) and (max-width: 992px) {
+  img{
+    width: 50% !important;
+  }
+}
+
+
+@media (min-width: 0px) and (max-width: 768px) {
+  img{
+    width: 50% !important;
+  }
+  .text-etiqueta{
+    font-size: 1rem;
+  }
+  .giant{font-size: 2.5rem !important;}
+  .texto-bibli{text-align: center !important; 
+    padding-left: 1rem !important;
+  padding-right: 1rem !important;}
+}

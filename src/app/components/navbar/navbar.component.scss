@@ -45,42 +45,42 @@ nav a:after {
 }
 
 nav a:nth-child(1):before {
-  background-color: #FF6347;
+  background-color: #25b09b;
   /* Coral */
 }
 
 nav a:nth-child(1):after {
-  background-color: #8A2BE2;
+  background-color: #a64f86;
   /* Blue Violet */
 }
 
 nav a:nth-child(2):before {
-  background-color: #32CD32;
+  background-color: #15406a;
   /* Lime Green */
 }
 
 nav a:nth-child(2):after {
-  background-color: #FFD700;
+  background-color: #25b09b;
   /* Gold */
 }
 
 nav a:nth-child(3):before {
-  background-color: #1E90FF;
+  background-color: #e4d7d2;
   /* Dodger Blue */
 }
 
 nav a:nth-child(3):after {
-  background-color: #ee01ff;
+  background-color: #15406a;
   /* Light Salmon */
 }
 
 nav a:nth-child(4):before {
-  background-color: #FF1493;
+  background-color: #25b09b;
   /* Deep Pink */
 }
 
 nav a:nth-child(4):after {
-  background-color: #00FFFF;
+  background-color: #a54e85;
   /* Cyan */
 }
 
@@ -105,22 +105,22 @@ nav a:hover:after {
 }
 
 nav a:nth-child(1):hover~#indicator {
-  background: linear-gradient(130deg, yellow, red);
+  background: linear-gradient(130deg, #25b09b, #a64f86);
 }
 
 nav a:nth-child(2):hover~#indicator {
   left: 30%;
-  background: linear-gradient(130deg, #00e2ff, #89ff00);
+  background: linear-gradient(130deg, #15406a, #25b09b);
 }
 
 nav a:nth-child(3):hover~#indicator {
   left: 53%;
-  background: linear-gradient(130deg, #1E90FF, #ee01ff);
+  background: linear-gradient(130deg, #e4d7d2, #15406a);
 }
 
 nav a:nth-child(4):hover~#indicator {
   left: 80%;
-  background: linear-gradient(130deg, #FF1493, #00FFFF);
+  background: linear-gradient(130deg, #25b09b, #a54e85);
 }
 
 
@@ -156,24 +156,28 @@ nav a:nth-child(4):hover~#indicator {
 
 @keyframes icon3d {
   0% {
-    text-shadow: 5px 4px rgba(244, 67, 54, 1), -5px -6px rgba(33, 150, 243, 1);
+    text-shadow: 5px 4px rgb(37, 176, 155), -5px -6px rgb(164, 77, 132);
   }
 
   25% {
-    text-shadow: -5px -6px rgba(244, 67, 54, 1), 5px 4px rgba(33, 150, 243, 1);
+    text-shadow: -5px -6px rgb(37, 176, 155), 5px 4px rgb(164, 77, 132);
   }
 
   50% {
-    text-shadow: 5px -4px rgba(244, 67, 54, 1), -8px 4px rgba(33, 150, 243, 1);
+    text-shadow: 5px -4px rgb(37, 176, 155), -8px 4px rgb(164, 77, 132);
   }
 
   75% {
-    text-shadow: -8px -4px rgba(244, 67, 54, 1), -5px -4px rgba(33, 150, 243, 1);
+    text-shadow: -8px -4px rgb(37, 176, 155), -5px -4px rgb(164, 77, 132);
   }
 
   100% {
-    text-shadow: -5px 0 rgba(244, 67, 54, 1), 5px -4px rgba(33, 150, 243, 1);
+    text-shadow: -5px 0 rgb(37, 176, 155), 5px -4px rgb(164, 77, 132);
   }
 }
 
 /* =================================================== */
+
+@media (max-width: 767px) {
+  .menu{margin-bottom: 2rem;}
+}

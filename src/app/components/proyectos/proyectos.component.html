@@ -1,37 +1,50 @@
-<div class="container animate__animated animate__fadeInLeft">
-    <div class="card" *ngFor="let item of proyects$ | async">
-      <div class="card__header">
-        <img [src]="item.img1" height="300" alt="card__image" class="card__image" width="600">
-      </div>
-      <div class="card__body">
-        
-        <div class="row">
-          <div class="col-12" style="display: contents !important;">
-            <span *ngIf="item.lenguage == 'ang'" class="mb-1 tag tag-red">Angular</span>
-            <span *ngIf="item.lenguage == 'php'"  class="mb-1 tag tag-php">PHP</span>
-            <span *ngFor="let item2 of item['tools']" [ngClass]="{'tag-boo': item2 == 'Bootstrap', 'tag-brown': item2=='Firebase', 'tag-sql': item2=='MySql', 'tag-htm': item2=='Html Css JS'}" class="mb-1 tag">{{item2}}</span>   
-          </div>
+<div class="row w-100">
+  <div class="col-12 d-flex justify-content-center mt-3">
+    <label class="animate__fadeInDown animate__animated" for="">Proyectos a la medida</label>
+  </div>
+  <div class="col-12 d-flex justify-content-center">
+    <div class="w-100 container animate__animated animate__fadeInLeft d-flex justify-content-center">
+      <div class="card" *ngFor="let item of proyects$ | async">
+        <div class="card__header">
+          <img [src]="item.img1" height="300" alt="card__image" class="card__image animate__fadeInDown animate__animated" width="600">
         </div>
-      
-      
-        <h4>{{item.title}}</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus. Doloremque, nihil! At ea atque quidem!</p>
-      </div>
-      <div class="card__footer">
-        <div class="user w-100">
-          <div class="row w-100" *ngIf="item.urlgit != '' || item.url !=''">
-            <div *ngIf="item.urlgit != ''" class="d-flex justify-content-center" [ngClass]="{'col-6':item.url != '','col-12':item.url == ''}">
-              <a [href]="item.urlgit" target="_blank">
-                <i class="fa fa-github fa-2x" aria-hidden="true"></i>
-              </a>
+        <div class="card__body">
+    
+          <div class="row">
+            <div class="col-12" style="display: contents !important;">
+              <span *ngIf="item.lenguage == 'ang'" class=" animate__fadeInLeft animate__animated mb-1 tag tag-red">Angular</span>
+              <span *ngIf="item.lenguage == 'php'" class=" animate__fadeInLeft animate__animated mb-1 tag tag-php">PHP</span>
+              <span *ngFor="let item2 of item['tools']"
+                [ngClass]="{'tag-boo': item2 == 'Bootstrap', 'tag-brown': item2=='Firebase', 'tag-sql': item2=='MySql', 'tag-htm': item2=='Html Css JS', 'tag-ionic': item2=='Ionic', 'tag-api': item2=='API'}"
+                class="mb-1 tag animate__fadeInLeft animate__animated">{{item2}}</span>
             </div>
-            <div class="col-6 d-flex justify-content-center" *ngIf="item.url != ''" [ngClass]="{'col-6':item.urlgit != '','col-12':item.urlgit == ''}">
-              <a [href]="item.url" target="_blank">
-                <i class="fa fa-link fa-2x" aria-hidden="true"></i>
-              </a>
+          </div>
+    
+    
+          <h4>{{item.title}}</h4>
+          <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi perferendis molestiae non nemo doloribus.
+            Doloremque, nihil! At ea atque quidem!</p> -->
+        </div>
+        <div class="card__footer">
+          <div class="user w-100">
+            <div class="row w-100" *ngIf="item.urlgit != '' || item.url !=''">
+              <div *ngIf="item.urlgit != ''" class="d-flex justify-content-center"
+                [ngClass]="{'col-6':item.url != '','col-12':item.url == ''}">
+                <a [href]="item.urlgit" target="_blank">
+                  <i class="fa fa-github fa-2x" aria-hidden="true"></i>
+                </a>
+              </div>
+              <div class="col-6 d-flex justify-content-center" *ngIf="item.url != ''"
+                [ngClass]="{'col-6':item.urlgit != '','col-12':item.urlgit == ''}">
+                <a [href]="item.url" target="_blank">
+                  <i class="fa fa-link fa-2x" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
+</div>

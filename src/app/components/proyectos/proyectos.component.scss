@@ -1,5 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;700;900&display=swap');
 
+
+.animate__animated.animate__fadeInLeft {
+  --animate-duration: 3s;
+}
+
+label{
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 2rem;
+}
 *,
 *::before,
 *::after {
@@ -86,7 +97,16 @@ background: linear-gradient(to bottom, #e4b05d, #dd8a00);
 background: linear-gradient(to bottom, #e87425, #dd4b25);
   color: #fafafa;
 }
-
+.tag-ionic {
+  background: #367cf7;
+background: linear-gradient(to bottom, #4c8bef, #367cf7);
+  color: #fafafa;
+}
+.tag-api {
+  background: #6bdcb3;
+background: linear-gradient(to bottom, #ceebe0, #6bdcb3);
+  color: #fafafa;
+}
 .card__body h4 {
   font-size: 1.5rem;
   text-transform: capitalize;

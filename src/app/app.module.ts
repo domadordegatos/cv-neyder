@@ -22,6 +22,10 @@ import { HomeComponent } from './components/home/home.component';
 import { BubleComponent } from './components/buble/buble.component';
 import { ProyectosComponent } from './components/proyectos/proyectos.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { AboutComponent } from './components/about/about.component';
+import { ExperienceComponent } from './components/experience/experience.component';
+import { SkillsComponent } from './components/skills/skills.component';
+import { StudiesComponent } from './components/studies/studies.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     HomeComponent,
     BubleComponent,
     ProyectosComponent,
-    NavbarComponent
+    NavbarComponent,
+    AboutComponent,
+    ExperienceComponent,
+    SkillsComponent,
+    StudiesComponent
   ],
   imports: [
     BrowserModule,
