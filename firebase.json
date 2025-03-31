@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/neyder-hv",
+    "public": "dist/base",
     "ignore": [
       "firebase.json",
       "**/.*",
