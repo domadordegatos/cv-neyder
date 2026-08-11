@@ -152,18 +152,18 @@ $border:      #e4eaf0;
 
 .blob-frame {
   position: relative;
-  width: 420px;
-  height: 420px;
+  width: 360px;
+  height: 360px;
   flex-shrink: 0;
 
-  @media (max-width: 768px) { width: 280px; height: 280px; }
+  @media (max-width: 768px) { width: 260px; height: 260px; }
 
   // Blob blanco central orgánico
   .blob-white-center {
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 72%; height: 72%;
+    width: 68%; height: 68%;
     background: white;
     border-radius: 62% 38% 46% 54% / 60% 44% 56% 40%;
     box-shadow: 0 8px 32px rgba($navy, 0.12);
@@ -177,31 +177,31 @@ $border:      #e4eaf0;
   }
 
   .blob-teal-top {
-    width: 115px; height: 100px;
+    width: 95px; height: 82px;
     background: #2ec4b6;
     border-radius: 73% 27% 58% 42% / 57% 43% 57% 43%;
-    top: -8px; left: -12px;
+    top: 2px; left: 2px;
   }
 
   .blob-purple-top {
-    width: 110px; height: 105px;
+    width: 90px; height: 86px;
     background: #6366f1;
     border-radius: 42% 58% 35% 65% / 55% 48% 52% 45%;
-    top: -10px; right: -14px;
+    top: 2px; right: 2px;
   }
 
   .blob-blue-left {
-    width: 100px; height: 110px;
+    width: 82px; height: 90px;
     background: #5b8dee;
     border-radius: 55% 45% 70% 30% / 40% 60% 40% 60%;
-    bottom: 20px; left: -16px;
+    bottom: 28px; left: 2px;
   }
 
   .blob-teal-bottom {
-    width: 105px; height: 95px;
+    width: 86px; height: 78px;
     background: #2ec4b6;
     border-radius: 38% 62% 45% 55% / 60% 38% 62% 40%;
-    bottom: -8px; right: 10px;
+    bottom: 2px; right: 2px;
   }
 
   // Puntos decorativos
@@ -210,9 +210,9 @@ $border:      #e4eaf0;
     border-radius: 50%;
     z-index: 2;
   }
-  .dot-1 { width: 14px; height: 14px; background: #2ec4b6; top: 42%; right: -18px; }
-  .dot-2 { width: 10px; height: 10px; background: #6366f1; top: 52%; left: -20px; }
-  .dot-3 { width: 8px;  height: 8px;  background: #5b8dee; bottom: 8px; left: 50%; }
+  .dot-1 { width: 12px; height: 12px; background: #2ec4b6; top: 42%; right: -14px; }
+  .dot-2 { width: 9px;  height: 9px;  background: #6366f1; top: 52%; left: -16px; }
+  .dot-3 { width: 7px;  height: 7px;  background: #5b8dee; bottom: 10px; left: 50%; }
 
   // Líneas SVG decorativas (solo overlay, sin fondo)
   .blob-lines {
@@ -228,7 +228,7 @@ $border:      #e4eaf0;
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 55%; height: 55%;
+    width: 60%; height: 60%;
     border-radius: 50%;
     object-fit: cover;
     object-position: top center;
