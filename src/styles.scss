@@ -1,0 +1,16 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #2d2d3d;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f6f8fb; }
+::-webkit-scrollbar-thumb { background: #5b52e8; border-radius: 3px; }
+
+::selection { background: rgba(91, 82, 232, 0.2); }

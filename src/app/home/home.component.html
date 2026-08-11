@@ -1,0 +1,316 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg" id="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="#">
+      Neyder<span class="brand-accent">.</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1 align-items-center">
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('about')">Sobre mí</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('skills')">Habilidades</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('projects')">Proyectos</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('contact')">Contacto</a></li>
+        <li class="nav-item ms-2">
+          <a href="https://github.com/domadordegatos" target="_blank" class="nav-icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-icon-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-section" id="hero">
+  <!-- Confetti dashes -->
+  <div class="confetti" aria-hidden="true">
+    <span class="dash d1"></span><span class="dash d2"></span><span class="dash d3"></span>
+    <span class="dash d4"></span><span class="dash d5"></span><span class="dash d6"></span>
+    <span class="dash d7"></span><span class="dash d8"></span><span class="dash d9"></span>
+    <span class="dash d10"></span><span class="dash d11"></span><span class="dash d12"></span>
+    <span class="dash d13"></span><span class="dash d14"></span><span class="dash d15"></span>
+  </div>
+
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <p class="hero-greeting">¡Hola! Soy</p>
+      <h1 class="hero-name">Neyder <span class="hero-name-accent">Neme</span></h1>
+      <p class="hero-role">Desarrollador Web <span class="amp">&amp;</span> IoT</p>
+      <p class="hero-desc">
+        Construyo experiencias digitales modernas con Angular y Firebase,
+        y llevo el código al mundo físico con Arduino.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-primary-custom" (click)="scrollTo('projects')">
+          Ver proyectos
+        </button>
+        <button class="btn-ghost-custom" (click)="scrollTo('contact')">
+          Contactar <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="blob-frame">
+        <!-- Blobs de color en las esquinas -->
+        <div class="blob blob-teal-top"></div>
+        <div class="blob blob-purple-top"></div>
+        <div class="blob blob-blue-left"></div>
+        <div class="blob blob-teal-bottom"></div>
+        <!-- Puntos decorativos -->
+        <div class="blob-dot dot-1"></div>
+        <div class="blob-dot dot-2"></div>
+        <div class="blob-dot dot-3"></div>
+        <!-- Blob blanco central -->
+        <div class="blob-white-center"></div>
+        <!-- Foto -->
+        <img src="assets/IMG_20211221_100144.jpg" alt="Neyder Neme" class="hero-photo" />
+        <!-- Líneas decorativas SVG -->
+        <svg class="blob-lines" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M50,282 Q92,315 148,298" stroke="#1a1a2f" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>
+          <path d="M190,28 Q224,14 256,28" stroke="#1a1a2f" stroke-width="1.8" fill="none" opacity="0.18" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layered waves -->
+  <div class="waves" aria-hidden="true">
+    <svg class="wave wave-3" viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,80 C200,140 400,20 600,80 C800,140 1000,20 1200,80 C1300,110 1380,95 1440,80 L1440,180 L0,180 Z" fill="#c5e3f2"/>
+    </svg>
+    <svg class="wave wave-2" viewBox="0 0 1440 160" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 C240,120 480,10 720,70 C900,115 1100,30 1300,75 C1360,90 1410,80 1440,70 L1440,160 L0,160 Z" fill="#d9eef8"/>
+    </svg>
+    <svg class="wave wave-1" viewBox="0 0 1440 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C180,90 360,10 540,55 C720,100 900,15 1080,60 C1200,90 1360,50 1440,40 L1440,140 L0,140 Z" fill="#ffffff"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-white" id="about">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-7" data-aos="fade-up">
+        <p class="section-label">SOBRE MÍ</p>
+        <h2 class="section-title">Un desarrollador apasionado por el detalle</h2>
+        <p class="section-body">
+          Soy Neyder, desarrollador full-stack con experiencia en el ecosistema web moderno.
+          Me especializo en <strong>Angular</strong>, <strong>Firebase</strong> y <strong>Node.js</strong>
+          para construir aplicaciones rápidas y escalables.
+        </p>
+        <p class="section-body">
+          También me apasiona el hardware: he desarrollado proyectos IoT con
+          <strong>Arduino</strong> que combinan software y electrónica para resolver
+          problemas reales. Me encanta cuando el código hace cosas en el mundo físico.
+        </p>
+        <a href="#" class="download-link">
+          <i class="bi bi-download me-2"></i>Descargar CV en PDF
+        </a>
+      </div>
+      <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="info-card">
+          <div class="info-row">
+            <span class="info-label">Nombre</span>
+            <span class="info-val">Neyder Neme</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Perfil</span>
+            <span class="info-val">Full-Stack / IoT</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Disponibilidad</span>
+            <span class="info-val avail">
+              <span class="avail-dot"></span>Disponible
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Idiomas</span>
+            <span class="info-val">Español · Inglés</span>
+          </div>
+          <div class="info-row border-0">
+            <span class="info-label">Email</span>
+            <span class="info-val">neiderneme&#64;gmail.com</span>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-item">
+            <span class="stat-n">4+</span>
+            <span class="stat-l">años de experiencia</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <span class="stat-n">10+</span>
+            <span class="stat-l">proyectos terminados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section-gray" id="skills">
+  <div class="container">
+    <p class="section-label" data-aos="fade-up">HABILIDADES</p>
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-7" data-aos="fade-up">
+        <h2 class="section-title">Tecnologías que uso a diario</h2>
+        <p class="section-body">
+          Mi stack principal gira alrededor del ecosistema JavaScript,
+          complementado con herramientas de backend, bases de datos en la nube
+          y electrónica embebida.
+        </p>
+
+        <div class="skills-group mt-4">
+          <h6 class="skills-group-title">Frontend</h6>
+          <div class="pills-wrap">
+            <span class="pill" *ngFor="let s of skillsFront">
+              <img [src]="s.icon" [alt]="s.name" class="pill-icon" *ngIf="s.icon"/>
+              {{ s.name }}
+            </span>
+          </div>
+        </div>
+
+        <div class="skills-group mt-4">
+          <h6 class="skills-group-title">Backend &amp; Cloud</h6>
+          <div class="pills-wrap">
+            <span class="pill" *ngFor="let s of skillsBack">
+              <img [src]="s.icon" [alt]="s.name" class="pill-icon" *ngIf="s.icon"/>
+              {{ s.name }}
+            </span>
+          </div>
+        </div>
+
+        <div class="skills-group mt-4">
+          <h6 class="skills-group-title">Hardware &amp; Otros</h6>
+          <div class="pills-wrap">
+            <span class="pill" *ngFor="let s of skillsHard">
+              <img [src]="s.icon" [alt]="s.name" class="pill-icon" *ngIf="s.icon"/>
+              {{ s.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
+        <p class="section-label">TAMBIÉN TRABAJO CON</p>
+        <ul class="also-list">
+          <li *ngFor="let t of alsoWith">
+            <i class="bi bi-arrow-right-short"></i>{{ t }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section-white" id="projects">
+  <div class="container">
+    <p class="section-label" data-aos="fade-up">PROYECTOS</p>
+    <div class="row g-5">
+      <div class="col-lg-8" data-aos="fade-up">
+        <h2 class="section-title">Trabajo destacado</h2>
+
+        <div class="project-list">
+          <article class="project-item" *ngFor="let p of projects; let i = index"
+                   [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 80">
+            <div class="project-meta">
+              <span class="project-tag" *ngFor="let t of p.tags">{{ t }}</span>
+            </div>
+            <h3 class="project-title">{{ p.title }}</h3>
+            <p class="project-subtitle">{{ p.subtitle }}</p>
+            <p class="project-desc">{{ p.desc }}</p>
+            <div class="project-links">
+              <a [href]="p.demo || 'https://github.com/domadordegatos'" target="_blank" class="project-read-more">Ver proyecto <i class="bi bi-arrow-right"></i></a>
+              <a [href]="p.repo" target="_blank" class="project-gh"><i class="bi bi-github me-1"></i>Código</a>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="120">
+        <p class="section-label">ÁREAS DE ENFOQUE</p>
+        <ul class="focus-list">
+          <li *ngFor="let f of focusAreas">
+            <i class="bi bi-arrow-right-short"></i>{{ f }}
+          </li>
+        </ul>
+
+        <div class="open-to mt-5">
+          <p class="section-label">ABIERTO A</p>
+          <p class="open-to-text">
+            Proyectos freelance, colaboraciones open-source y oportunidades
+            de trabajo remoto o híbrido.
+          </p>
+          <button class="btn-primary-custom" (click)="scrollTo('contact')">Hablemos</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-gray" id="contact">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+      <div class="col-lg-6" data-aos="fade-up">
+        <p class="section-label">CONTACTO</p>
+        <h2 class="section-title">¿Tienes un proyecto en mente?</h2>
+        <p class="section-body">
+          Me encantaría escucharte. Escríbeme y te respondo en menos de 24 horas.
+        </p>
+        <div class="contact-links mt-4">
+          <a href="mailto:neiderneme@gmail.com" class="contact-link">
+            <i class="bi bi-envelope"></i>
+            <span>neiderneme&#64;gmail.com</span>
+          </a>
+          <a href="https://github.com/domadordegatos" target="_blank" class="contact-link">
+            <i class="bi bi-github"></i>
+            <span>github.com/domadordegatos</span>
+          </a>
+          <a href="#" class="contact-link">
+            <i class="bi bi-linkedin"></i>
+            <span>linkedin.com/in/neyder</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+        <form class="contact-form">
+          <div class="form-field">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" placeholder="Tu nombre completo" />
+          </div>
+          <div class="form-field">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="tu@email.com" />
+          </div>
+          <div class="form-field">
+            <label for="message">Mensaje</label>
+            <textarea id="message" rows="5" placeholder="Cuéntame sobre tu proyecto..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary-custom w-100 py-3">
+            Enviar mensaje <i class="bi bi-send ms-2"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="footer-brand">Neyder<span class="brand-accent">.</span></span>
+      <span class="footer-copy">Construido con Angular &amp; <i class="bi bi-heart-fill"></i></span>
+      <span class="footer-year">&copy; {{ currentYear }}</span>
+    </div>
+  </div>
+</footer>
