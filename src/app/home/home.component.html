@@ -12,12 +12,13 @@
         <li class="nav-item"><a class="nav-link" (click)="scrollTo('about')">Sobre mí</a></li>
         <li class="nav-item"><a class="nav-link" (click)="scrollTo('skills')">Habilidades</a></li>
         <li class="nav-item"><a class="nav-link" (click)="scrollTo('projects')">Proyectos</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('trayectoria')">Trayectoria</a></li>
         <li class="nav-item"><a class="nav-link" (click)="scrollTo('contact')">Contacto</a></li>
         <li class="nav-item ms-2">
           <a href="https://github.com/domadordegatos" target="_blank" class="nav-icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
         </li>
         <li class="nav-item">
-          <a href="#" class="nav-icon-btn" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.instagram.com/domador.de.gatos/" target="_blank" class="nav-icon-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
         </li>
       </ul>
     </div>
@@ -25,15 +26,11 @@
 </nav>
 
 <!-- HERO -->
-<section class="hero-section" id="hero">
-  <!-- Confetti dashes -->
-  <div class="confetti" aria-hidden="true">
-    <span class="dash d1"></span><span class="dash d2"></span><span class="dash d3"></span>
-    <span class="dash d4"></span><span class="dash d5"></span><span class="dash d6"></span>
-    <span class="dash d7"></span><span class="dash d8"></span><span class="dash d9"></span>
-    <span class="dash d10"></span><span class="dash d11"></span><span class="dash d12"></span>
-    <span class="dash d13"></span><span class="dash d14"></span><span class="dash d15"></span>
-  </div>
+<section class="hero-section" id="hero" #heroSection (click)="onBlobClick($event)">
+  <!-- Canvas de blobs — ocupa todo el hero -->
+  <canvas #blobCanvas class="blob-canvas-hero"></canvas>
+
+  <!-- Confetti dibujado en canvas -->
 
   <div class="container hero-inner">
     <div class="hero-text">
@@ -41,8 +38,8 @@
       <h1 class="hero-name">Neyder <span class="hero-name-accent">Neme</span></h1>
       <p class="hero-role">Desarrollador Web <span class="amp">&amp;</span> IoT</p>
       <p class="hero-desc">
-        Construyo experiencias digitales modernas con Angular y Firebase,
-        y llevo el código al mundo físico con Arduino.
+        Construyo desde la interfaz hasta el hardware: aplicaciones web modernas,
+        sistemas IoT y soluciones embebidas que resuelven problemas reales.
       </p>
       <div class="hero-cta">
         <button class="btn-primary-custom" (click)="scrollTo('projects')">
@@ -54,25 +51,8 @@
       </div>
     </div>
     <div class="hero-photo-wrap">
-      <div class="blob-frame">
-        <!-- Blobs de color en las esquinas -->
-        <div class="blob blob-teal-top"></div>
-        <div class="blob blob-purple-top"></div>
-        <div class="blob blob-blue-left"></div>
-        <div class="blob blob-teal-bottom"></div>
-        <!-- Puntos decorativos -->
-        <div class="blob-dot dot-1"></div>
-        <div class="blob-dot dot-2"></div>
-        <div class="blob-dot dot-3"></div>
-        <!-- Blob blanco central -->
-        <div class="blob-white-center"></div>
-        <!-- Foto -->
-        <img src="assets/IMG_20211221_100144.jpg" alt="Neyder Neme" class="hero-photo" />
-        <!-- Líneas decorativas SVG -->
-        <svg class="blob-lines" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M50,282 Q92,315 148,298" stroke="#1a1a2f" stroke-width="1.8" fill="none" opacity="0.2" stroke-linecap="round"/>
-          <path d="M190,28 Q224,14 256,28" stroke="#1a1a2f" stroke-width="1.8" fill="none" opacity="0.18" stroke-linecap="round"/>
-        </svg>
+      <div class="blob-frame" #blobFrame>
+        <img src="assets/IMG_20211221_100144.webp" alt="Neyder Neme" class="hero-photo" />
       </div>
     </div>
   </div>
@@ -108,9 +88,6 @@
           <strong>Arduino</strong> que combinan software y electrónica para resolver
           problemas reales. Me encanta cuando el código hace cosas en el mundo físico.
         </p>
-        <a href="#" class="download-link">
-          <i class="bi bi-download me-2"></i>Descargar CV en PDF
-        </a>
       </div>
       <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
         <div class="info-card">
@@ -134,7 +111,7 @@
           </div>
           <div class="info-row border-0">
             <span class="info-label">Email</span>
-            <span class="info-val">neiderneme&#64;gmail.com</span>
+            <span class="info-val">soporte&#64;nncoms.com</span>
           </div>
         </div>
         <div class="stats-row">
@@ -166,7 +143,7 @@
           y electrónica embebida.
         </p>
 
-        <div class="skills-group mt-4">
+        <div class="skills-group mt-4 tilt-card" (mousemove)="onTilt($event)" (mouseleave)="resetTilt($event)">
           <h6 class="skills-group-title">Frontend</h6>
           <div class="pills-wrap">
             <span class="pill" *ngFor="let s of skillsFront">
@@ -176,7 +153,7 @@
           </div>
         </div>
 
-        <div class="skills-group mt-4">
+        <div class="skills-group mt-4 tilt-card" (mousemove)="onTilt($event)" (mouseleave)="resetTilt($event)">
           <h6 class="skills-group-title">Backend &amp; Cloud</h6>
           <div class="pills-wrap">
             <span class="pill" *ngFor="let s of skillsBack">
@@ -186,7 +163,7 @@
           </div>
         </div>
 
-        <div class="skills-group mt-4">
+        <div class="skills-group mt-4 tilt-card" (mousemove)="onTilt($event)" (mouseleave)="resetTilt($event)">
           <h6 class="skills-group-title">Hardware &amp; Otros</h6>
           <div class="pills-wrap">
             <span class="pill" *ngFor="let s of skillsHard">
@@ -212,97 +189,241 @@
 <!-- PROJECTS -->
 <section class="section-white" id="projects">
   <div class="container">
-    <p class="section-label" data-aos="fade-up">PROYECTOS</p>
-    <div class="row g-5">
-      <div class="col-lg-8" data-aos="fade-up">
+    <div class="projects-header" data-aos="fade-up">
+      <div>
+        <p class="section-label">PROYECTOS</p>
         <h2 class="section-title">Trabajo destacado</h2>
+      </div>
+      <div class="focus-pills">
+        <span class="focus-pill" *ngFor="let f of focusAreas">{{ f }}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12" data-aos="fade-up">
 
         <div class="project-list">
           <article class="project-item" *ngFor="let p of projects; let i = index"
                    [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 80">
+
+            <!-- Tags -->
             <div class="project-meta">
-              <span class="project-tag" *ngFor="let t of p.tags">{{ t }}</span>
+              <span class="project-tag" *ngFor="let t of p.tags">
+                <img *ngIf="tagIcons[t]" [src]="tagIcons[t]" [alt]="t" class="tag-icon" />
+                {{ t }}
+              </span>
             </div>
-            <h3 class="project-title">{{ p.title }}</h3>
-            <p class="project-subtitle">{{ p.subtitle }}</p>
-            <p class="project-desc">{{ p.desc }}</p>
-            <div class="project-links">
-              <a [href]="p.demo || 'https://github.com/domadordegatos'" target="_blank" class="project-read-more">Ver proyecto <i class="bi bi-arrow-right"></i></a>
-              <a [href]="p.repo" target="_blank" class="project-gh"><i class="bi bi-github me-1"></i>Código</a>
+
+            <!-- Two-column body -->
+            <div class="project-body" [class.has-screenshots]="p.screenshots && p.screenshots.length" [class.reverse]="i % 2 === 1">
+
+              <!-- Left: text -->
+              <div class="project-text">
+                <h3 class="project-title">{{ p.title }}</h3>
+                <p class="project-subtitle">{{ p.subtitle }}</p>
+                <div class="project-expandable">
+                  <div class="project-desc-wrap">
+                    <p class="project-desc">{{ p.desc }}</p>
+                    <div class="desc-fade"></div>
+                  </div>
+                  <div class="project-extras">
+                    <ul *ngIf="p.highlights && p.highlights.length" class="project-highlights">
+                      <li *ngFor="let h of p.highlights"><i class="bi bi-check2"></i> {{ h }}</li>
+                    </ul>
+                    <p *ngIf="p.why" class="project-why"><i class="bi bi-lightbulb"></i> {{ p.why }}</p>
+                  </div>
+                </div>
+                <button class="project-toggle-btn" (click)="toggleExpand(i)">
+                  <span *ngIf="!isExpanded(i)">Leer más <i class="bi bi-chevron-down"></i></span>
+                  <span *ngIf="isExpanded(i)">Leer menos <i class="bi bi-chevron-up"></i></span>
+                </button>
+              </div>
+
+              <!-- Right: carousel -->
+              <div *ngIf="p.screenshots && p.screenshots.length" class="project-gallery">
+                <!-- Main image -->
+                <div class="gallery-main">
+                  <img [src]="p.screenshots[getIdx(i)]" alt="Captura de {{ p.title }}" class="gallery-main-img" [class.fade-out]="fadingOut[i]" (click)="openLightbox(i)" loading="lazy" decoding="async" />
+                  <button class="gallery-btn gallery-prev" (click)="prevShot(i, p.screenshots.length)"><i class="bi bi-chevron-left"></i></button>
+                  <button class="gallery-btn gallery-next" (click)="nextShot(i, p.screenshots.length)"><i class="bi bi-chevron-right"></i></button>
+                </div>
+                <!-- Thumbnails strip -->
+                <div class="gallery-thumbs">
+                  <img *ngFor="let s of p.screenshots; let d = index"
+                       [src]="s" alt="" class="gallery-thumb"
+                       [class.active]="d === getIdx(i)"
+                       (click)="screenshotIndex[i] = d" loading="lazy" decoding="async" />
+                </div>
+              </div>
+
+            </div><!-- /project-body -->
+
+            <!-- Full-width bottom row -->
+            <div class="project-bottom-row">
+              <div *ngIf="p.urls && p.urls.length" class="url-chips">
+                <a *ngFor="let u of p.urls" [href]="u.url" target="_blank" class="url-chip" [title]="u.desc">
+                  <span class="url-label">{{ u.label }}</span>
+                  <i class="bi bi-box-arrow-up-right"></i>
+                </a>
+              </div>
+              <span *ngIf="p.urls && p.urls.length && p.credentials" class="row-divider">·</span>
+              <div *ngIf="p.credentials" class="project-credentials">
+                <i class="bi bi-key"></i>
+                <code>{{ p.credentials.user }}</code><span class="cred-sep">/</span><code>{{ p.credentials.pass }}</code>
+              </div>
+              <a *ngIf="p.demo" [href]="p.demo" target="_blank" class="project-read-more">Ver proyecto <i class="bi bi-arrow-right"></i></a>
+              <a *ngIf="p.repo" [href]="p.repo" target="_blank" class="project-gh"><i class="bi bi-github me-1"></i>Código</a>
+              <span *ngIf="!p.demo && !p.repo && !p.credentials" class="project-wip">Proyecto privado</span>
             </div>
+
           </article>
         </div>
       </div>
+    </div>
 
-      <div class="col-lg-4" data-aos="fade-up" data-aos-delay="120">
-        <p class="section-label">ÁREAS DE ENFOQUE</p>
-        <ul class="focus-list">
-          <li *ngFor="let f of focusAreas">
-            <i class="bi bi-arrow-right-short"></i>{{ f }}
-          </li>
-        </ul>
-
-        <div class="open-to mt-5">
-          <p class="section-label">ABIERTO A</p>
-          <p class="open-to-text">
-            Proyectos freelance, colaboraciones open-source y oportunidades
-            de trabajo remoto o híbrido.
-          </p>
-          <button class="btn-primary-custom" (click)="scrollTo('contact')">Hablemos</button>
-        </div>
-      </div>
+    <!-- Open to -->
+    <div class="open-to-bar" data-aos="fade-up">
+      <span class="open-to-bar-text">
+        <i class="bi bi-lightning-charge-fill"></i>
+        Abierto a proyectos freelance, colaboraciones open-source y trabajo remoto o híbrido.
+      </span>
+      <button class="btn-primary-custom" (click)="scrollTo('contact')">Hablemos</button>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
+<!-- TRAYECTORIA -->
+<section class="section-white" id="trayectoria">
+  <div class="container">
+    <p class="section-label">TRAYECTORIA</p>
+
+    <!-- Experiencia -->
+    <div class="tray-block">
+      <h2 class="tray-subtitle"><i class="bi bi-briefcase-fill"></i> Experiencia Laboral</h2>
+      <div class="timeline">
+        <div class="tl-item" *ngFor="let e of experience">
+          <div class="tl-dot" [class.tl-dot--current]="e.current"></div>
+          <div class="tl-body">
+            <div class="tl-head">
+              <span class="tl-role">{{ e.role }}</span>
+              <span class="tl-badge" *ngIf="e.current">Actual</span>
+            </div>
+            <p class="tl-org"><i class="bi bi-building"></i> {{ e.org }} · {{ e.location }}</p>
+            <p class="tl-period"><i class="bi bi-calendar3"></i> {{ e.period }}</p>
+            <ul class="tl-bullets">
+              <li *ngFor="let b of e.bullets"><i class="bi bi-check2"></i> {{ b }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formación -->
+    <div class="tray-block">
+      <h2 class="tray-subtitle"><i class="bi bi-mortarboard-fill"></i> Formación Académica</h2>
+      <div class="edu-cards">
+        <div class="edu-card" *ngFor="let e of education" [class.edu-card--highlight]="e.highlight">
+          <i class="bi {{ e.icon }} edu-icon"></i>
+          <div>
+            <p class="edu-degree">{{ e.degree }}</p>
+            <p class="edu-inst">{{ e.institution }}</p>
+            <span class="edu-year">{{ e.year }}</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="cert-label">Certificaciones destacadas</p>
+      <div class="cert-list">
+        <div class="cert-item" *ngFor="let c of certifications">
+          <i class="bi {{ c.icon }}"></i>
+          <div>
+            <span class="cert-name">{{ c.name }}</span>
+            <span class="cert-detail">{{ c.detail }} · {{ c.year }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section-gray" id="contact">
   <div class="container">
-    <div class="row g-5 align-items-start">
-      <div class="col-lg-6" data-aos="fade-up">
-        <p class="section-label">CONTACTO</p>
-        <h2 class="section-title">¿Tienes un proyecto en mente?</h2>
-        <p class="section-body">
-          Me encantaría escucharte. Escríbeme y te respondo en menos de 24 horas.
-        </p>
-        <div class="contact-links mt-4">
-          <a href="mailto:neiderneme@gmail.com" class="contact-link">
+    <p class="section-label" data-aos="fade-up">CONTACTO</p>
+    <h2 class="section-title" data-aos="fade-up">¿Tienes un proyecto en mente?</h2>
+    <p class="section-body mb-5" data-aos="fade-up">
+      Me encantaría escucharte. Escríbeme y te respondo en menos de 24 horas.
+    </p>
+
+    <div class="row g-4 align-items-stretch">
+
+      <!-- Columna 1: Redes -->
+      <div class="col-lg-3 col-md-12" data-aos="fade-up">
+        <div class="contact-links">
+          <a href="mailto:soporte@nncoms.com" class="contact-link">
             <i class="bi bi-envelope"></i>
-            <span>neiderneme&#64;gmail.com</span>
+            <span>soporte&#64;nncoms.com</span>
           </a>
           <a href="https://github.com/domadordegatos" target="_blank" class="contact-link">
             <i class="bi bi-github"></i>
             <span>github.com/domadordegatos</span>
           </a>
-          <a href="#" class="contact-link">
-            <i class="bi bi-linkedin"></i>
-            <span>linkedin.com/in/neyder</span>
+          <a href="https://www.instagram.com/domador.de.gatos/" target="_blank" class="contact-link">
+            <i class="bi bi-instagram"></i>
+            <span>instagram.com/domador.de.gatos</span>
           </a>
         </div>
       </div>
 
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-        <form class="contact-form">
+      <!-- Columna 2: Mapa (centro) -->
+      <div class="col-lg-4 col-md-12 d-flex flex-column" data-aos="fade-up" data-aos-delay="80">
+        <div class="map-wrapper flex-grow-1">
+          <p class="map-label"><i class="bi bi-geo-alt-fill"></i> Yopal, Casanare — Colombia</p>
+          <iframe
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-72.4259%2C5.3078%2C-72.3659%2C5.3678&amp;layer=mapnik&amp;marker=5.3378%2C-72.3959"
+            class="map-frame map-frame--stretch"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Columna 3: Formulario -->
+      <div class="col-lg-5 col-md-12" data-aos="fade-up" data-aos-delay="160">
+        <form class="contact-form" (submit)="$event.preventDefault(); sendContact()">
           <div class="form-field">
-            <label for="name">Nombre</label>
-            <input type="text" id="name" placeholder="Tu nombre completo" />
+            <label for="cname">Nombre</label>
+            <input type="text" id="cname" placeholder="Tu nombre completo" [(ngModel)]="contactForm.name" name="cname" />
           </div>
           <div class="form-field">
-            <label for="email">Email</label>
-            <input type="email" id="email" placeholder="tu@email.com" />
+            <label for="cemail">Email</label>
+            <input type="email" id="cemail" placeholder="tu@email.com" [(ngModel)]="contactForm.email" name="cemail" />
           </div>
           <div class="form-field">
-            <label for="message">Mensaje</label>
-            <textarea id="message" rows="5" placeholder="Cuéntame sobre tu proyecto..."></textarea>
+            <label for="cmessage">Mensaje</label>
+            <textarea id="cmessage" rows="4" placeholder="Cuéntame sobre tu proyecto..." [(ngModel)]="contactForm.message" name="cmessage"></textarea>
           </div>
-          <button type="submit" class="btn-primary-custom w-100 py-3">
-            Enviar mensaje <i class="bi bi-send ms-2"></i>
+          <button type="submit" class="btn-primary-custom w-100 py-3" [disabled]="contactStatus === 'sending'">
+            <span *ngIf="contactStatus !== 'sending' && contactStatus !== 'sent'">Enviar mensaje <i class="bi bi-send ms-2"></i></span>
+            <span *ngIf="contactStatus === 'sending'"><i class="bi bi-arrow-repeat spin ms-1"></i> Enviando...</span>
+            <span *ngIf="contactStatus === 'sent'"><i class="bi bi-check2-circle ms-1"></i> ¡Mensaje enviado!</span>
           </button>
+          <p *ngIf="contactStatus === 'error'" class="contact-error">Hubo un error. Escríbeme directamente a soporte&#64;nncoms.com</p>
         </form>
       </div>
+
     </div>
   </div>
 </section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" *ngIf="lightboxSrc" (click)="closeLightbox()">
+  <button class="lightbox-close" (click)="closeLightbox()"><i class="bi bi-x-lg"></i></button>
+  <button class="lightbox-nav lightbox-prev" (click)="$event.stopPropagation(); lightboxPrev()"><i class="bi bi-chevron-left"></i></button>
+  <img [src]="lightboxSrc" class="lightbox-img" (click)="$event.stopPropagation()" />
+  <button class="lightbox-nav lightbox-next" (click)="$event.stopPropagation(); lightboxNext()"><i class="bi bi-chevron-right"></i></button>
+</div>
 
 <!-- FOOTER -->
 <footer class="site-footer">
