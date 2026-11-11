@@ -44,3 +44,8 @@ Thumbs.db
 # Claude Code / logs
 .claude/
 serve.log
+
+# Credenciales y environment generados (ver scripts/set-env.js)
+.env
+/src/environments/environment.ts
+/src/environments/environment.prod.ts

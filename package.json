@@ -4,7 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "config": "node scripts/set-env.js",
+    "prestart": "npm run config",
+    "prebuild": "npm run config",
     "build": "ng build",
+    "build:prod": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -35,6 +39,7 @@
     "lottie-web": "^5.11.0",
     "ngx-bootstrap": "^8.0.0",
     "rxjs": "~7.5.0",
+    "socket.io-client": "^4.8.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

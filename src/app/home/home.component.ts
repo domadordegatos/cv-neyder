@@ -1,5 +1,9 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, NgZone } from '@angular/core';
 import * as AOS from 'aos';
+import { ContentService } from '../services/content.service';
+import { RealtimeService } from '../services/realtime.service';
+import { ThemeService } from '../services/theme.service';
+import { LanguageService } from '../services/language.service';
 
 interface BlobParticle {
   x: number; y: number;
@@ -493,13 +497,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     'MySQL':       'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
     'Git':         'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
     'Capacitor':   'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/capacitor/capacitor-original.svg',
-    'Leaflet':     'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2357a823"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/></svg>',
+    'Leaflet':     'https://cdn.simpleicons.org/leaflet/199900',
     'ESP32':       'assets/arduino-logo-1.webp',
     'Arduino':     'assets/arduino-logo-1.webp',
     'C++':         'assets/1200px-ISO_C++_Logo.svg.webp',
-    'MQTT':        'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235b52e8"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm-1-5h2v2h-2zm0-8h2v6h-2z"/></svg>',
+    'MQTT':        'https://cdn.simpleicons.org/mqtt/660066',
     'WebSockets':  'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg',
+    'Socket.io':   'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg',
     'IoT':         'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/raspberrypi/raspberrypi-original.svg',
+    'MongoDB':     'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+    'Express':     'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
+    'Nginx':       'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nginx/nginx-original.svg',
+    'Cloudflare':  'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cloudflare/cloudflare-original.svg',
+    'Linux':       'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg',
+    'Spotify API': 'https://cdn.simpleicons.org/spotify/1DB954',
   };
 
   lightboxProjectIdx: number | null = null;
@@ -531,6 +542,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   toggleExpand(i: number): void {
     const wasExpanded = !!this.expandedProjects[i];
     this.expandedProjects[i] = !wasExpanded;
+    if (!wasExpanded && this.projects[i]) this.content.trackEvent('project_open', this.projects[i].title);
 
     // rAF asegura que la manipulación DOM ocurra después del ciclo de render de Angular
     requestAnimationFrame(() => {
@@ -582,20 +594,105 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     'Interfaces accesibles y responsivas',
   ];
 
+  private revealScrollHandler?: () => void;
+  timelineFill = 0;
+
+  /** Rellena la línea del timeline según el scroll y marca cada experiencia
+   *  como "alcanzada" cuando la línea de luz llega a su punto. */
+  private computeTimelineFill(): void {
+    const tl = document.querySelector('.timeline') as HTMLElement | null;
+    if (!tl) return;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const trigger = vh * 0.5; // punto de referencia (mitad de la pantalla)
+    const r = tl.getBoundingClientRect();
+    const filled = trigger - r.top;
+    this.timelineFill = Math.max(0, Math.min(100, (filled / r.height) * 100));
+
+    // Destacar las experiencias que la línea ya alcanzó
+    tl.querySelectorAll<HTMLElement>('.tl-item').forEach(item => {
+      const dot = item.querySelector('.tl-dot');
+      const dy = dot ? dot.getBoundingClientRect().top : item.getBoundingClientRect().top;
+      item.classList.toggle('tl-reached', dy <= trigger);
+    });
+  }
+
   ngAfterViewInit(): void {
-    document.querySelectorAll<HTMLElement>('.project-desc-wrap').forEach(el => {
-      el.style.height = '80px';
-    });
-    document.querySelectorAll<HTMLElement>('.project-extras').forEach(el => {
-      el.style.height = '0px';
-      el.style.opacity = '0';
-    });
+    this.collapseAllProjects();
+    this.setupReveal();
     // defer so browser has computed layout (offsetWidth/Height available)
     setTimeout(() => this.initBlobs(), 60);
   }
 
+  /** Revela elementos .reveal cuando entran en el viewport al hacer scroll.
+   *  Basado en getBoundingClientRect (más confiable que IntersectionObserver
+   *  entre entornos) + red de seguridad que garantiza visibilidad. */
+  private showEl(el: Element): void {
+    if (el.hasAttribute('data-aos')) el.classList.add('aos-animate');
+    if (el.classList.contains('reveal')) el.classList.add('in');
+  }
+
+  private revealVisible(): void {
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelectorAll('.reveal:not(.in), [data-aos]:not(.aos-animate)').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.9 && r.bottom > 0) this.showEl(el);
+    });
+  }
+
+  private setupReveal(): void {
+    this.revealVisible(); // revela lo que ya está visible
+    this.computeTimelineFill();
+    if (!this.revealScrollHandler) {
+      this.revealScrollHandler = () => { this.revealVisible(); this.computeTimelineFill(); };
+      window.addEventListener('scroll', this.revealScrollHandler, { passive: true });
+      window.addEventListener('resize', this.revealScrollHandler, { passive: true });
+    }
+    // Red de seguridad: si algo quedó sin revelar tras 3.5s, mostrarlo igual
+    setTimeout(() => document.querySelectorAll('.reveal:not(.in), [data-aos]:not(.aos-animate)')
+      .forEach(el => this.showEl(el)), 3500);
+  }
+
+  /** Colapsa la descripción y los extras de todas las tarjetas de proyecto.
+   *  Se re-aplica cada vez que los proyectos se recargan desde la API. */
+  private collapseAllProjects(): void {
+    document.querySelectorAll<HTMLElement>('.project-desc-wrap').forEach(el => { el.style.height = '80px'; });
+    document.querySelectorAll<HTMLElement>('.project-extras').forEach(el => {
+      el.style.height = '0px';
+      el.style.opacity = '0';
+    });
+  }
+
+  private rtDisposers: (() => void)[] = [];
+
+  // Info de contacto (se sobre-escribe desde la BD si existe)
+  profile = {
+    email: 'soporte@nncoms.com',
+    github: 'https://github.com/domadordegatos',
+    githubLabel: 'github.com/domadordegatos',
+    instagram: 'https://www.instagram.com/domador.de.gatos/',
+    instagramLabel: 'instagram.com/domador.de.gatos',
+    whatsapp: '',
+    whatsappLabel: 'domador.de.gatos',
+  };
+
+  /** Link wa.me a partir del número (o URL completa si ya la trae). */
+  get whatsappLink(): string {
+    const w = (this.profile.whatsapp || '').trim();
+    if (!w) return '';
+    if (w.startsWith('http')) return w;
+    return 'https://wa.me/' + w.replace(/[^0-9]/g, '');
+  }
+
+  constructor(private content: ContentService, private rt: RealtimeService,
+              public theme: ThemeService, public lang: LanguageService) {}
+
+  /** Atajo para traducir textos fijos de interfaz. */
+  t(key: string): string { return this.lang.t(key); }
+
   ngOnInit(): void {
     AOS.init({ duration: 700, once: true, offset: 60 });
+    this.content.trackVisit();
+    this.loadContent();
     this.autoPlayInterval = setInterval(() => {
       this.projects.forEach((p, i) => {
         if (p.screenshots && p.screenshots.length > 1 && this.lightboxProjectIdx === null) {
@@ -605,11 +702,126 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }, 3500);
   }
 
+  /**
+   * Carga el contenido desde MongoDB. Si la API responde con datos, reemplaza
+   * los arrays; si falla o viene vacío, se conservan los datos por defecto
+   * (fallback) para que el sitio nunca quede en blanco.
+   */
+  // Solo elementos activos (activo indefinido o true → visible; false → oculto)
+  private onlyActive<T extends { active?: boolean }>(arr: T[]): T[] {
+    return arr.filter(x => x.active !== false);
+  }
+
+  private loadProjects(): void {
+    this.content.getProjects().subscribe(d => {
+      const a = this.onlyActive(d);
+      if (a.length) {
+        this.projects = a as any;
+        this.expandedProjects = [];
+        // Esperar a que Angular pinte las nuevas tarjetas y colapsarlas + revelarlas
+        setTimeout(() => { this.collapseAllProjects(); this.setupReveal(); }, 0);
+      }
+    });
+  }
+  private loadExperience(): void {
+    this.content.getExperience().subscribe(d => { const a = this.onlyActive(d); if (a.length) { this.experience = a as any; setTimeout(() => this.setupReveal(), 0); } });
+  }
+  private loadEducation(): void {
+    this.content.getEducation().subscribe(d => { const a = this.onlyActive(d); if (a.length) { this.education = a as any; setTimeout(() => this.setupReveal(), 0); } });
+  }
+  private loadCertifications(): void {
+    this.content.getCertifications().subscribe(d => { const a = this.onlyActive(d); if (a.length) { this.certifications = a as any; setTimeout(() => this.setupReveal(), 0); } });
+  }
+  testimonials: any[] = [];
+  private loadTestimonials(): void {
+    this.content.getTestimonials().subscribe(d => {
+      const a = this.onlyActive(d);
+      this.testimonials = a as any;
+      setTimeout(() => this.setupReveal(), 0);
+    });
+  }
+
+  private loadSkills(): void {
+    this.content.getSkills().subscribe(d => {
+      const act = this.onlyActive(d);
+      if (!act.length) return;
+      const front = act.filter(s => s.category === 'front');
+      const back = act.filter(s => s.category === 'back');
+      const hard = act.filter(s => s.category === 'hard');
+      if (front.length) this.skillsFront = front as any;
+      if (back.length) this.skillsBack = back as any;
+      if (hard.length) this.skillsHard = hard as any;
+    });
+  }
+
+  private loadProfile(): void {
+    this.content.getProfile().subscribe(p => {
+      if (p) this.profile = { ...this.profile, ...p } as any;
+    });
+  }
+
+  // ── IoT Huerto en vivo ─────────────────────────────────────────────────
+  iot: any = null;
+  private loadIot(): void {
+    this.content.getIotStatus().subscribe(d => { if (d) this.iot = d; });
+  }
+  isHuerto(p: any): boolean {
+    return /huerto/i.test(p?.title || '') || (p?.tags || []).some((t: string) => /esp32|iot/i.test(t));
+  }
+  fmtUptime(sec: number): string {
+    if (sec == null) return '—';
+    const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
+    if (d > 0) return `${d}d ${h}h`;
+    if (h > 0) return `${h}h ${m}m`;
+    return `${m}m`;
+  }
+  signalLevel(rssi: number): number {
+    // 0-4 barras según dBm
+    if (rssi == null) return 0;
+    if (rssi >= -55) return 4;
+    if (rssi >= -65) return 3;
+    if (rssi >= -75) return 2;
+    if (rssi >= -85) return 1;
+    return 0;
+  }
+
+  private loadContent(): void {
+    this.loadProfile();
+    this.loadIot();
+    this.loadProjects();
+    this.loadExperience();
+    this.loadEducation();
+    this.loadCertifications();
+    this.loadSkills();
+    this.loadTestimonials();
+
+    // Tiempo real: al insertar/editar/eliminar en Mongo, recargar esa sección
+    const subs: Array<[string, () => void]> = [
+      ['projects', () => this.loadProjects()],
+      ['experience', () => this.loadExperience()],
+      ['education', () => this.loadEducation()],
+      ['certifications', () => this.loadCertifications()],
+      ['skills', () => this.loadSkills()],
+      ['testimonials', () => this.loadTestimonials()],
+      ['config', () => this.loadProfile()],
+      ['iot_status', () => this.loadIot()],
+    ];
+    subs.forEach(([col, reload]) => {
+      this.rtDisposers.push(this.rt.subscribe(col, () => reload()));
+    });
+  }
+
   ngOnDestroy(): void {
     clearInterval(this.autoPlayInterval);
     cancelAnimationFrame(this.blobAnimFrame);
     if (this.heroSectionRef?.nativeElement) {
       this.heroSectionRef.nativeElement.removeEventListener('mousemove', this.blobMouseMove);
+    }
+    this.rtDisposers.forEach(dispose => dispose());
+    this.rtDisposers = [];
+    if (this.revealScrollHandler) {
+      window.removeEventListener('scroll', this.revealScrollHandler);
+      window.removeEventListener('resize', this.revealScrollHandler);
     }
   }
 
@@ -1004,6 +1216,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   contactForm = { name: '', email: '', message: '' };
   contactStatus: 'idle' | 'sending' | 'sent' | 'error' = 'idle';
+  honeypot = ''; // anti-spam: si un bot lo llena, se descarta el envío
 
   onTilt(event: MouseEvent): void {
     const card = event.currentTarget as HTMLElement;
@@ -1026,7 +1239,22 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async sendContact(): Promise<void> {
     if (!this.contactForm.name || !this.contactForm.email || !this.contactForm.message) return;
+    // Honeypot: si está lleno, es un bot → fingir éxito sin enviar
+    if (this.honeypot) { this.contactStatus = 'sent'; this.contactForm = { name: '', email: '', message: '' }; return; }
     this.contactStatus = 'sending';
+
+    const payload = {
+      name: this.contactForm.name,
+      email: this.contactForm.email,
+      message: this.contactForm.message,
+    };
+
+    // 1) Guardar en MongoDB (best-effort: no bloquea el envío del email si falla)
+    this.content.saveContact(payload).subscribe({
+      error: (err) => console.warn('No se pudo guardar el contacto en la BD:', err),
+    });
+
+    // 2) Enviar email vía EmailJS (define el estado visible al usuario)
     try {
       const res = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
         method: 'POST',
@@ -1036,9 +1264,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           template_id: 'template_2ycioib',
           user_id: '0u6kiLc9fATOLPdSB',
           template_params: {
-            from_name: this.contactForm.name,
-            from_email: this.contactForm.email,
-            message: this.contactForm.message.replace(/\n/g, '<br>'),
+            from_name: payload.name,
+            from_email: payload.email,
+            message: payload.message.replace(/\n/g, '<br>'),
             to_email: 'soporte@nncoms.com',
           },
         }),
@@ -1052,5 +1280,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   scrollTo(id: string): void {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  downloadPdf(): void {
+    window.print();
+  }
+
+  get allSkillNames(): string {
+    return this.allSkillsList.join(' · ');
+  }
+  get allSkillsList(): string[] {
+    return [...this.skillsFront, ...this.skillsBack, ...this.skillsHard].map((s: any) => s.name);
   }
 }

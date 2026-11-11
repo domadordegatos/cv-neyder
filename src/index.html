@@ -2,11 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Neyder Neme | Desarrollador Web</title>
+  <title>Neyder Neme | Desarrollador Web & IoT</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Portfolio de Neyder Neme - Desarrollador Web Full-Stack y IoT">
+
+  <!-- SEO -->
+  <meta name="description" content="Neyder Neme — Desarrollador Full-Stack e IoT. Construyo desde la interfaz hasta el hardware: aplicaciones web modernas (Angular, Firebase), sistemas IoT (ESP32, MQTT) y soluciones embebidas que resuelven problemas reales.">
+  <meta name="author" content="Neyder Neme">
+  <meta name="keywords" content="Neyder Neme, desarrollador web, full-stack, IoT, Angular, Firebase, ESP32, MQTT, Yopal, Casanare, Colombia, portafolio">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#5b52e8">
+  <link rel="canonical" href="https://nncoms.com/">
+
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Neyder Neme — Portafolio">
+  <meta property="og:title" content="Neyder Neme | Desarrollador Web & IoT">
+  <meta property="og:description" content="Construyo desde la interfaz hasta el hardware: aplicaciones web modernas, sistemas IoT y soluciones embebidas que resuelven problemas reales.">
+  <meta property="og:image" content="https://api.nncoms.com/uploads/cv/og/1787172444731-1s97qbfqhum.webp">
+  <meta property="og:image:alt" content="Neyder Neme — Desarrollador Web & IoT">
+  <meta property="og:url" content="https://nncoms.com/">
+  <meta property="og:locale" content="es_CO">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Neyder Neme | Desarrollador Web & IoT">
+  <meta name="twitter:description" content="Aplicaciones web modernas, sistemas IoT y soluciones embebidas que resuelven problemas reales.">
+  <meta name="twitter:image" content="https://api.nncoms.com/uploads/cv/og/1787172444731-1s97qbfqhum.webp">
+
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Neyder Neme">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -14,5 +43,18 @@
 </head>
 <body>
   <app-root></app-root>
+  <script>
+    // Registrar el service worker (PWA instalable + offline) — solo en producción,
+    // no en localhost (evita conflictos con el dev server de webpack).
+    (function () {
+      var h = location.hostname;
+      var isLocal = h === 'localhost' || h === '127.0.0.1' || h.indexOf('192.168.') === 0;
+      if ('serviceWorker' in navigator && !isLocal) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('sw.js').catch(function () {});
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

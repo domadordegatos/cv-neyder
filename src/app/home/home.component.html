@@ -9,16 +9,28 @@
     </button>
     <div class="collapse navbar-collapse" id="navMenu">
       <ul class="navbar-nav ms-auto gap-1 align-items-center">
-        <li class="nav-item"><a class="nav-link" (click)="scrollTo('about')">Sobre mí</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="scrollTo('skills')">Habilidades</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="scrollTo('projects')">Proyectos</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="scrollTo('trayectoria')">Trayectoria</a></li>
-        <li class="nav-item"><a class="nav-link" (click)="scrollTo('contact')">Contacto</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('about')">{{ t('nav_about') }}</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('skills')">{{ t('nav_skills') }}</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('projects')">{{ t('nav_projects') }}</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('trayectoria')">{{ t('nav_track') }}</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="scrollTo('contact')">{{ t('nav_contact') }}</a></li>
         <li class="nav-item ms-2">
           <a href="https://github.com/domadordegatos" target="_blank" class="nav-icon-btn" title="GitHub"><i class="bi bi-github"></i></a>
         </li>
         <li class="nav-item">
           <a href="https://www.instagram.com/domador.de.gatos/" target="_blank" class="nav-icon-btn" title="Instagram"><i class="bi bi-instagram"></i></a>
+        </li>
+        <li class="nav-item">
+          <button class="nav-icon-btn theme-toggle" (click)="theme.toggle()"
+                  [title]="theme.isDark ? 'Modo claro' : 'Modo oscuro'" aria-label="Cambiar tema">
+            <i class="bi" [class.bi-moon-stars-fill]="!theme.isDark" [class.bi-sun-fill]="theme.isDark"></i>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="nav-icon-btn lang-toggle" (click)="lang.toggle()"
+                  [title]="lang.lang === 'es' ? 'Switch to English' : 'Cambiar a español'" aria-label="Idioma">
+            {{ lang.lang === 'es' ? 'EN' : 'ES' }}
+          </button>
         </li>
       </ul>
     </div>
@@ -34,19 +46,19 @@
 
   <div class="container hero-inner">
     <div class="hero-text">
-      <p class="hero-greeting">¡Hola! Soy</p>
+      <p class="hero-greeting">{{ t('hero_greeting') }}</p>
       <h1 class="hero-name">Neyder <span class="hero-name-accent">Neme</span></h1>
-      <p class="hero-role">Desarrollador Web <span class="amp">&amp;</span> IoT</p>
-      <p class="hero-desc">
-        Construyo desde la interfaz hasta el hardware: aplicaciones web modernas,
-        sistemas IoT y soluciones embebidas que resuelven problemas reales.
-      </p>
+      <p class="hero-role">{{ t('hero_role') }} <span class="amp">&amp;</span> IoT</p>
+      <p class="hero-desc">{{ t('hero_desc') }}</p>
       <div class="hero-cta">
         <button class="btn-primary-custom" (click)="scrollTo('projects')">
-          Ver proyectos
+          {{ t('hero_cta_projects') }}
         </button>
         <button class="btn-ghost-custom" (click)="scrollTo('contact')">
-          Contactar <i class="bi bi-arrow-right ms-1"></i>
+          {{ t('hero_cta_contact') }} <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+        <button class="btn-ghost-custom" (click)="downloadPdf()" title="Descargar CV en PDF">
+          <i class="bi bi-download me-1"></i> {{ t('hero_cta_pdf') }}
         </button>
       </div>
     </div>
@@ -76,8 +88,8 @@
   <div class="container">
     <div class="row g-5 align-items-start">
       <div class="col-lg-7" data-aos="fade-up">
-        <p class="section-label">SOBRE MÍ</p>
-        <h2 class="section-title">Un desarrollador apasionado por el detalle</h2>
+        <p class="section-label">{{ t('lbl_about') }}</p>
+        <h2 class="section-title">{{ t('title_about') }}</h2>
         <p class="section-body">
           Soy Neyder, desarrollador full-stack con experiencia en el ecosistema web moderno.
           Me especializo en <strong>Angular</strong>, <strong>Firebase</strong> y <strong>Node.js</strong>
@@ -111,7 +123,7 @@
           </div>
           <div class="info-row border-0">
             <span class="info-label">Email</span>
-            <span class="info-val">soporte&#64;nncoms.com</span>
+            <span class="info-val">{{ profile.email }}</span>
           </div>
         </div>
         <div class="stats-row">
@@ -133,10 +145,10 @@
 <!-- SKILLS -->
 <section class="section-gray" id="skills">
   <div class="container">
-    <p class="section-label" data-aos="fade-up">HABILIDADES</p>
+    <p class="section-label" data-aos="fade-up">{{ t('lbl_skills') }}</p>
     <div class="row g-5 align-items-start">
       <div class="col-lg-7" data-aos="fade-up">
-        <h2 class="section-title">Tecnologías que uso a diario</h2>
+        <h2 class="section-title">{{ t('title_skills') }}</h2>
         <p class="section-body">
           Mi stack principal gira alrededor del ecosistema JavaScript,
           complementado con herramientas de backend, bases de datos en la nube
@@ -175,7 +187,7 @@
       </div>
 
       <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
-        <p class="section-label">TAMBIÉN TRABAJO CON</p>
+        <p class="section-label">{{ t('lbl_alsowork') }}</p>
         <ul class="also-list">
           <li *ngFor="let t of alsoWith">
             <i class="bi bi-arrow-right-short"></i>{{ t }}
@@ -188,11 +200,12 @@
 
 <!-- PROJECTS -->
 <section class="section-white" id="projects">
+
   <div class="container">
     <div class="projects-header" data-aos="fade-up">
       <div>
-        <p class="section-label">PROYECTOS</p>
-        <h2 class="section-title">Trabajo destacado</h2>
+        <p class="section-label">{{ t('lbl_projects') }}</p>
+        <h2 class="section-title">{{ t('title_projects') }}</h2>
       </div>
       <div class="focus-pills">
         <span class="focus-pill" *ngFor="let f of focusAreas">{{ f }}</span>
@@ -221,6 +234,28 @@
               <div class="project-text">
                 <h3 class="project-title">{{ p.title }}</h3>
                 <p class="project-subtitle">{{ p.subtitle }}</p>
+
+                <!-- Widget IoT en vivo (solo Huerto) -->
+                <div class="iot-live" *ngIf="isHuerto(p) && iot">
+                  <span class="iot-badge" [class.on]="iot.online">
+                    <span class="iot-pulse"></span>{{ iot.online ? t('iot_online') : t('iot_offline') }}
+                  </span>
+                  <span class="iot-chip">
+                    <b>{{ t('iot_relays') }}</b>
+                    <span class="relay-dots">
+                      <span class="relay" *ngFor="let r of iot.relays; let ri = index"
+                            [class.active]="r" [title]="'Relé ' + (ri+1)"></span>
+                    </span>
+                  </span>
+                  <span class="iot-chip">
+                    <b>WiFi</b>
+                    <span class="signal-bars" [attr.data-level]="signalLevel(iot.rssi)"><i></i><i></i><i></i><i></i></span>
+                    {{ iot.rssi }}
+                  </span>
+                  <span class="iot-chip"><b>{{ t('iot_uptime') }}</b> {{ fmtUptime(iot.uptimeSec) }}</span>
+                  <span class="iot-chip" *ngIf="iot.riegoDurationSec != null"><b>{{ t('iot_watering') }}</b> {{ iot.riegoDurationSec }}s</span>
+                  <span class="iot-live-tag">● EN VIVO</span>
+                </div>
                 <div class="project-expandable">
                   <div class="project-desc-wrap">
                     <p class="project-desc">{{ p.desc }}</p>
@@ -234,9 +269,15 @@
                   </div>
                 </div>
                 <button class="project-toggle-btn" (click)="toggleExpand(i)">
-                  <span *ngIf="!isExpanded(i)">Leer más <i class="bi bi-chevron-down"></i></span>
-                  <span *ngIf="isExpanded(i)">Leer menos <i class="bi bi-chevron-up"></i></span>
+                  <span *ngIf="!isExpanded(i)">{{ t('read_more') }} <i class="bi bi-chevron-down"></i></span>
+                  <span *ngIf="isExpanded(i)">{{ t('read_less') }} <i class="bi bi-chevron-up"></i></span>
                 </button>
+              </div>
+
+              <!-- Placeholder cuando aún no hay capturas -->
+              <div *ngIf="!(p.screenshots && p.screenshots.length)" class="project-gallery gallery-empty">
+                <i class="bi bi-image"></i>
+                <span>{{ t('img_soon') }}</span>
               </div>
 
               <!-- Right: carousel -->
@@ -296,18 +337,22 @@
 <!-- TRAYECTORIA -->
 <section class="section-white" id="trayectoria">
   <div class="container">
-    <p class="section-label">TRAYECTORIA</p>
+    <p class="section-label">{{ t('lbl_track') }}</p>
 
     <!-- Experiencia -->
     <div class="tray-block">
-      <h2 class="tray-subtitle"><i class="bi bi-briefcase-fill"></i> Experiencia Laboral</h2>
+      <h2 class="tray-subtitle"><i class="bi bi-briefcase-fill"></i> {{ t('tray_exp') }}</h2>
       <div class="timeline">
-        <div class="tl-item" *ngFor="let e of experience">
+        <!-- Línea de luz que se llena con el scroll -->
+        <div class="timeline-progress" [style.height.%]="timelineFill"></div>
+
+        <div class="tl-item reveal reveal-left" *ngFor="let e of experience; let i = index"
+             [style.transition-delay.ms]="i * 120">
           <div class="tl-dot" [class.tl-dot--current]="e.current"></div>
           <div class="tl-body">
             <div class="tl-head">
               <span class="tl-role">{{ e.role }}</span>
-              <span class="tl-badge" *ngIf="e.current">Actual</span>
+              <span class="tl-badge" *ngIf="e.current">{{ t('badge_current') }}</span>
             </div>
             <p class="tl-org"><i class="bi bi-building"></i> {{ e.org }} · {{ e.location }}</p>
             <p class="tl-period"><i class="bi bi-calendar3"></i> {{ e.period }}</p>
@@ -321,9 +366,10 @@
 
     <!-- Formación -->
     <div class="tray-block">
-      <h2 class="tray-subtitle"><i class="bi bi-mortarboard-fill"></i> Formación Académica</h2>
+      <h2 class="tray-subtitle"><i class="bi bi-mortarboard-fill"></i> {{ t('tray_edu') }}</h2>
       <div class="edu-cards">
-        <div class="edu-card" *ngFor="let e of education" [class.edu-card--highlight]="e.highlight">
+        <div class="edu-card reveal" *ngFor="let e of education; let i = index"
+             [class.edu-card--highlight]="e.highlight" [style.transition-delay.ms]="i * 110">
           <i class="bi {{ e.icon }} edu-icon"></i>
           <div>
             <p class="edu-degree">{{ e.degree }}</p>
@@ -333,9 +379,10 @@
         </div>
       </div>
 
-      <p class="cert-label">Certificaciones destacadas</p>
+      <p class="cert-label">{{ t('tray_certs') }}</p>
       <div class="cert-list">
-        <div class="cert-item" *ngFor="let c of certifications">
+        <div class="cert-item reveal" *ngFor="let c of certifications; let i = index"
+             [style.transition-delay.ms]="i * 90">
           <i class="bi {{ c.icon }}"></i>
           <div>
             <span class="cert-name">{{ c.name }}</span>
@@ -347,30 +394,55 @@
   </div>
 </section>
 
+<!-- TESTIMONIOS -->
+<section class="section-white" id="testimonials" *ngIf="testimonials.length">
+  <div class="container">
+    <p class="section-label" data-aos="fade-up">{{ t('lbl_testimonials') }}</p>
+    <h2 class="section-title" data-aos="fade-up">{{ t('title_testimonials') }}</h2>
+    <div class="testi-grid">
+      <figure class="testi-card reveal" *ngFor="let tm of testimonials; let i = index"
+              [style.transition-delay.ms]="i * 90">
+        <i class="bi bi-quote testi-quote"></i>
+        <blockquote>{{ tm.text }}</blockquote>
+        <figcaption>
+          <img *ngIf="tm.avatar" [src]="tm.avatar" [alt]="tm.name" class="testi-avatar" loading="lazy" />
+          <div>
+            <span class="testi-name">{{ tm.name }}</span>
+            <span class="testi-role">{{ tm.role }}</span>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <section class="section-gray" id="contact">
   <div class="container">
-    <p class="section-label" data-aos="fade-up">CONTACTO</p>
-    <h2 class="section-title" data-aos="fade-up">¿Tienes un proyecto en mente?</h2>
-    <p class="section-body mb-5" data-aos="fade-up">
-      Me encantaría escucharte. Escríbeme y te respondo en menos de 24 horas.
-    </p>
+    <p class="section-label" data-aos="fade-up">{{ t('lbl_contact') }}</p>
+    <h2 class="section-title" data-aos="fade-up">{{ t('title_contact') }}</h2>
+    <p class="section-body mb-5" data-aos="fade-up">{{ t('contact_body') }}</p>
 
     <div class="row g-4 align-items-stretch">
 
       <!-- Columna 1: Redes -->
       <div class="col-lg-3 col-md-12" data-aos="fade-up">
         <div class="contact-links">
-          <a href="mailto:soporte@nncoms.com" class="contact-link">
+          <a [href]="'mailto:' + profile.email" class="contact-link">
             <i class="bi bi-envelope"></i>
-            <span>soporte&#64;nncoms.com</span>
+            <span>{{ profile.email }}</span>
           </a>
-          <a href="https://github.com/domadordegatos" target="_blank" class="contact-link">
+          <a [href]="whatsappLink || null" target="_blank" class="contact-link"
+             *ngIf="whatsappLink || profile.whatsappLabel">
+            <i class="bi bi-whatsapp"></i>
+            <span>{{ profile.whatsappLabel || 'WhatsApp' }}</span>
+          </a>
+          <a [href]="profile.github" target="_blank" class="contact-link" *ngIf="profile.github">
             <i class="bi bi-github"></i>
-            <span>github.com/domadordegatos</span>
+            <span>{{ profile.githubLabel || profile.github }}</span>
           </a>
-          <a href="https://www.instagram.com/domador.de.gatos/" target="_blank" class="contact-link">
+          <a [href]="profile.instagram" target="_blank" class="contact-link" *ngIf="profile.instagram">
             <i class="bi bi-instagram"></i>
-            <span>instagram.com/domador.de.gatos</span>
+            <span>{{ profile.instagramLabel || profile.instagram }}</span>
           </a>
         </div>
       </div>
@@ -392,22 +464,25 @@
       <!-- Columna 3: Formulario -->
       <div class="col-lg-5 col-md-12" data-aos="fade-up" data-aos-delay="160">
         <form class="contact-form" (submit)="$event.preventDefault(); sendContact()">
+          <!-- Honeypot anti-spam: oculto para humanos, los bots lo llenan -->
+          <input type="text" class="hp-field" tabindex="-1" autocomplete="off"
+                 [(ngModel)]="honeypot" name="website" aria-hidden="true" />
           <div class="form-field">
-            <label for="cname">Nombre</label>
-            <input type="text" id="cname" placeholder="Tu nombre completo" [(ngModel)]="contactForm.name" name="cname" />
+            <label for="cname">{{ t('form_name') }}</label>
+            <input type="text" id="cname" [placeholder]="t('ph_name')" [(ngModel)]="contactForm.name" name="cname" />
           </div>
           <div class="form-field">
-            <label for="cemail">Email</label>
+            <label for="cemail">{{ t('form_email') }}</label>
             <input type="email" id="cemail" placeholder="tu@email.com" [(ngModel)]="contactForm.email" name="cemail" />
           </div>
           <div class="form-field">
-            <label for="cmessage">Mensaje</label>
-            <textarea id="cmessage" rows="4" placeholder="Cuéntame sobre tu proyecto..." [(ngModel)]="contactForm.message" name="cmessage"></textarea>
+            <label for="cmessage">{{ t('form_message') }}</label>
+            <textarea id="cmessage" rows="4" [placeholder]="t('ph_message')" [(ngModel)]="contactForm.message" name="cmessage"></textarea>
           </div>
           <button type="submit" class="btn-primary-custom w-100 py-3" [disabled]="contactStatus === 'sending'">
-            <span *ngIf="contactStatus !== 'sending' && contactStatus !== 'sent'">Enviar mensaje <i class="bi bi-send ms-2"></i></span>
-            <span *ngIf="contactStatus === 'sending'"><i class="bi bi-arrow-repeat spin ms-1"></i> Enviando...</span>
-            <span *ngIf="contactStatus === 'sent'"><i class="bi bi-check2-circle ms-1"></i> ¡Mensaje enviado!</span>
+            <span *ngIf="contactStatus !== 'sending' && contactStatus !== 'sent'">{{ t('form_send') }} <i class="bi bi-send ms-2"></i></span>
+            <span *ngIf="contactStatus === 'sending'"><i class="bi bi-arrow-repeat spin ms-1"></i> {{ t('form_sending') }}</span>
+            <span *ngIf="contactStatus === 'sent'"><i class="bi bi-check2-circle ms-1"></i> {{ t('form_sent') }}</span>
           </button>
           <p *ngIf="contactStatus === 'error'" class="contact-error">Hubo un error. Escríbeme directamente a soporte&#64;nncoms.com</p>
         </form>
@@ -416,6 +491,63 @@
     </div>
   </div>
 </section>
+
+<!-- VERSIÓN IMPRIMIBLE (PDF) — oculta en pantalla, visible al imprimir -->
+<div class="print-cv" aria-hidden="true">
+  <header class="pc-head">
+    <div class="pc-head-text">
+      <h1>Neyder Neme</h1>
+      <p class="pc-role">Desarrollador Full-Stack &amp; IoT</p>
+      <p class="pc-contact">
+        {{ profile.email }} · {{ profile.githubLabel }} · {{ profile.instagramLabel }}
+        <span *ngIf="profile.whatsappLabel"> · WhatsApp: {{ profile.whatsappLabel }}</span>
+      </p>
+      <p class="pc-loc">Yopal, Casanare — Colombia</p>
+    </div>
+    <img class="pc-photo" src="assets/IMG_20211221_100144.webp" alt="Neyder Neme" />
+  </header>
+
+  <p class="pc-summary">
+    Construyo desde la interfaz hasta el hardware: aplicaciones web modernas,
+    sistemas IoT y soluciones embebidas que resuelven problemas reales.
+  </p>
+
+  <section class="pc-sec">
+    <h2>Experiencia</h2>
+    <div class="pc-item" *ngFor="let e of experience">
+      <strong>{{ e.role }}</strong> — {{ e.org }}, {{ e.location }}
+      <span class="pc-period">{{ e.period }}</span>
+      <ul><li *ngFor="let b of e.bullets">{{ b }}</li></ul>
+    </div>
+  </section>
+
+  <section class="pc-sec">
+    <h2>Formación</h2>
+    <div class="pc-line" *ngFor="let e of education">
+      <strong>{{ e.degree }}</strong> — {{ e.institution }} ({{ e.year }})
+    </div>
+  </section>
+
+  <section class="pc-sec">
+    <h2>Certificaciones</h2>
+    <div class="pc-line" *ngFor="let c of certifications">{{ c.name }} — {{ c.detail }} ({{ c.year }})</div>
+  </section>
+
+  <section class="pc-sec">
+    <h2>Habilidades</h2>
+    <div class="pc-skills">
+      <span class="pc-pill" *ngFor="let s of allSkillsList">{{ s }}</span>
+    </div>
+  </section>
+
+  <section class="pc-sec">
+    <h2>Proyectos destacados</h2>
+    <div class="pc-line" *ngFor="let p of projects">
+      <strong>{{ p.title }}</strong> — {{ p.subtitle }}
+      <span *ngIf="p.urls && p.urls.length" class="pc-url">{{ p.urls[0].url }}</span>
+    </div>
+  </section>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox-overlay" *ngIf="lightboxSrc" (click)="closeLightbox()">

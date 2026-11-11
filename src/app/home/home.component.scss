@@ -1,3 +1,14 @@
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal.reveal-left { transform: translateX(-45px); }
+.reveal.in { opacity: 1; transform: none; }
+
 // ── Variables ───────────────────────────────────────────────────────────────
 $purple:      #5b52e8;
 $purple-dark: #4740d4;
@@ -567,6 +578,82 @@ $border:      #e4eaf0;
   }
 }
 
+// ── Testimonios ───────────────────────────────────────────────────────────────
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 28px;
+}
+.testi-card {
+  position: relative;
+  background: $off-white;
+  border: 1px solid $border;
+  border-radius: 16px;
+  padding: 24px 22px 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  &:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba($navy, 0.08); }
+}
+.testi-quote { position: absolute; top: 16px; right: 18px; font-size: 1.8rem; color: rgba($purple, 0.18); }
+.testi-card blockquote { margin: 0 0 16px; font-size: 0.95rem; line-height: 1.6; color: $text; }
+.testi-card figcaption { display: flex; align-items: center; gap: 12px; }
+.testi-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.testi-name { display: block; font-weight: 700; font-size: 0.9rem; color: $navy; }
+.testi-role { display: block; font-size: 0.8rem; color: $muted; }
+
+// ── Widget IoT en vivo (compacto, una sola fila) ──────────────────────────────
+.iot-live {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin: 10px 0 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba($purple, 0.06), rgba(#2ec4b6, 0.06));
+  border: 1px solid rgba($purple, 0.15);
+  font-size: 0.82rem;
+}
+.iot-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.72rem; font-weight: 700; color: $muted;
+  .iot-pulse { width: 7px; height: 7px; border-radius: 50%; background: #b0b0c0; }
+  &.on { color: #16a34a; .iot-pulse { background: #16a34a; animation: iotPulse 1.6s ease-in-out infinite; } }
+}
+@keyframes iotPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(#16a34a, 0.5); } 50% { box-shadow: 0 0 0 5px rgba(#16a34a, 0); } }
+.iot-live-tag {
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; color: $pink; margin-left: auto;
+  animation: liveBlink 1.4s ease-in-out infinite;
+}
+@keyframes liveBlink {
+  0%, 100% { opacity: 1; text-shadow: 0 0 6px rgba($pink, 0.6); }
+  50%      { opacity: 0.35; text-shadow: 0 0 0 rgba($pink, 0); }
+}
+.iot-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-weight: 700; color: $text; white-space: nowrap;
+  b { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.4px; color: $muted; font-weight: 700; }
+}
+.relay-dots { display: inline-flex; gap: 3px; }
+.relay {
+  width: 12px; height: 12px; border-radius: 3px;
+  background: #d5d8e2;
+  transition: all 0.3s;
+  &.active { background: #2ec4b6; box-shadow: 0 0 6px rgba(#2ec4b6, 0.7); }
+}
+.signal-bars {
+  display: inline-flex; align-items: flex-end; gap: 2px; height: 12px;
+  i { width: 3px; background: #d0d3dc; border-radius: 1px; }
+  i:nth-child(1) { height: 4px; }
+  i:nth-child(2) { height: 7px; }
+  i:nth-child(3) { height: 10px; }
+  i:nth-child(4) { height: 12px; }
+  &[data-level="1"] i:nth-child(-n+1),
+  &[data-level="2"] i:nth-child(-n+2),
+  &[data-level="3"] i:nth-child(-n+3),
+  &[data-level="4"] i:nth-child(-n+4) { background: #2ec4b6; }
+}
+
 // ── Projects ──────────────────────────────────────────────────────────────────
 .projects-header {
   display: flex;
@@ -713,6 +800,21 @@ $border:      #e4eaf0;
   // Gallery (right column)
   .project-gallery {
     flex-shrink: 0;
+  }
+
+  .gallery-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 180px;
+    border-radius: 12px;
+    border: 1px dashed $border;
+    background: rgba($purple, 0.03);
+    color: $muted;
+    i { font-size: 2rem; opacity: 0.5; }
+    span { font-size: 0.85rem; font-weight: 600; }
   }
 
   .gallery-main {
@@ -1344,22 +1446,85 @@ $border:      #e4eaf0;
     left: 7px;
     top: 6px;
     bottom: 0;
-    width: 2px;
+    width: 3px;
     background: $border;
-    border-radius: 2px;
+    border-radius: 3px;
+  }
+}
+
+// Línea de luz que se llena con el scroll
+.timeline-progress {
+  position: absolute;
+  left: 7px;
+  top: 6px;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, $purple, #7c74f0 50%, #2ec4b6);
+  box-shadow: 0 0 8px rgba($purple, 0.6), 0 0 16px rgba($purple, 0.3);
+  transition: height 0.15s linear;
+  z-index: 0; // la línea va POR DEBAJO de los puntos
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 50%;
+    transform: translateX(-50%);
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #2ec4b6;
+    box-shadow: 0 0 10px 2px rgba(#2ec4b6, 0.8);
   }
 }
 
 .tl-item {
   position: relative;
   margin-bottom: 2rem;
+  transition: transform 0.35s ease;
+  z-index: 1; // el item (y su punto) queda por encima de la línea
 
   &:last-child { margin-bottom: 0; }
+
+  // Cuando la línea de luz llega a esta experiencia: destaca
+  &.tl-reached {
+    .tl-body {
+      background: linear-gradient(90deg, rgba($purple, 0.06), rgba($purple, 0));
+      box-shadow: -14px 0 0 0 rgba($purple, 0.06);
+      border-radius: 10px;
+    }
+    .tl-role { color: $purple; }
+    .tl-badge {
+      background: $purple;
+      color: #fff;
+      animation: badgePulse 1.6s ease-in-out infinite;
+    }
+    .tl-org i, .tl-period i { color: $purple; }
+    .tl-bullets li i { color: #2ec4b6; transform: scale(1.15); }
+    .tl-dot {
+      transform: scale(1.6);
+      background: $purple;
+      box-shadow: 0 0 0 4px rgba($purple, 0.18),
+                  0 0 14px 3px rgba($purple, 0.6);
+    }
+  }
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba($purple, 0.5); }
+  50% { box-shadow: 0 0 0 5px rgba($purple, 0); }
+}
+
+.tl-body {
+  min-width: 0;
+  padding: 6px 10px 6px 12px;
+  margin-left: -12px;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+
+  li i, .tl-org i, .tl-period i { transition: color 0.35s ease, transform 0.35s ease; }
 }
 
 .tl-dot {
   position: absolute;
-  left: -24px;
+  left: -26.5px;
   top: 5px;
   width: 14px;
   height: 14px;
@@ -1367,6 +1532,9 @@ $border:      #e4eaf0;
   background: $border;
   border: 2px solid $white;
   box-shadow: 0 0 0 2px $border;
+  z-index: 2;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.35s ease, box-shadow 0.35s ease;
 
   &--current {
     background: $purple;

@@ -29,6 +29,8 @@
             "assets": [
               "src/favicon.ico",
               "src/favicon.svg",
+              "src/manifest.webmanifest",
+              "src/sw.js",
               "src/assets"
             ],
             "styles": [
@@ -53,8 +55,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "28kb",
-                  "maximumError": "40kb"
+                  "maximumWarning": "40kb",
+                  "maximumError": "56kb"
                 }
               ],
               "fileReplacements": [

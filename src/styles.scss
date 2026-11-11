@@ -2,15 +2,225 @@
 
 html { scroll-behavior: smooth; }
 
+:root {
+  --bg: #ffffff;
+  --bg-gray: #f6f8fb;
+  --surface: #ffffff;
+  --text: #2d2d3d;
+  --text-strong: #1a1a2f;
+  --text-muted: #636380;
+  --border: #e4eaf0;
+  --scroll-track: #f6f8fb;
+}
+
+// Tema oscuro
+:root[data-theme="dark"] {
+  --bg: #0f1117;
+  --bg-gray: #141620;
+  --surface: #1a1d29;
+  --text: #d7dae6;
+  --text-strong: #f2f4fb;
+  --text-muted: #969ab4;
+  --border: #2a2e3d;
+  --scroll-track: #14161f;
+}
+
 body {
   font-family: 'Inter', sans-serif;
-  background: #ffffff;
-  color: #2d2d3d;
+  background: var(--bg);
+  color: var(--text);
   overflow-x: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #f6f8fb; }
+::-webkit-scrollbar-track { background: var(--scroll-track); }
 ::-webkit-scrollbar-thumb { background: #5b52e8; border-radius: 3px; }
 
 ::selection { background: rgba(91, 82, 232, 0.2); }
+
+// ── Vista imprimible (PDF) ────────────────────────────────────────────────────
+.print-cv { display: none; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
+@media print {
+  // Colapsar TODO el sitio (display:none quita el espacio) y mostrar solo el CV
+  app-home > *:not(.print-cv),
+  app-root > router-outlet { display: none !important; }
+  .print-cv { display: block !important; }
+  body { background: #fff !important; color: #000 !important; }
+  @page { margin: 12mm; }
+
+  .print-cv {
+    font-family: 'Inter', Arial, sans-serif;
+    color: #2d2d3d;
+    font-size: 10.5px;
+    line-height: 1.45;
+  }
+
+  // Cabecera con banda de acento (estilo web) + foto
+  .pc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-left: 5px solid #5b52e8;
+    padding: 2px 0 12px 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid #e4eaf0;
+  }
+  .pc-head-text { flex: 1; }
+  .pc-photo {
+    width: 78px; height: 78px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 3px solid #5b52e8;
+    flex-shrink: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .pc-head h1 { font-size: 26px; margin: 0; color: #1a1a2f; font-weight: 900; letter-spacing: -0.02em; }
+  .pc-role { font-size: 13px; color: #5b52e8; font-weight: 700; margin: 3px 0 6px; }
+  .pc-contact, .pc-loc { font-size: 10px; color: #636380; margin: 1px 0; }
+  .pc-summary { font-style: italic; color: #4a4a5a; margin: 0 0 14px; padding-left: 14px; }
+
+  // Títulos de sección (como los section-label de la web)
+  .pc-sec { margin-bottom: 13px; page-break-inside: avoid; }
+  .pc-sec h2 {
+    display: inline-block;
+    font-size: 11px; color: #5b52e8; text-transform: uppercase;
+    letter-spacing: 1px; font-weight: 800;
+    margin: 0 0 8px; padding-bottom: 3px;
+    border-bottom: 2px solid #5b52e8;
+  }
+
+  // Experiencia — tarjetas ligeras
+  .pc-item {
+    margin-bottom: 9px; padding-left: 12px;
+    border-left: 2px solid #e4eaf0;
+  }
+  .pc-item strong, .pc-line strong { color: #1a1a2f; font-weight: 700; }
+  .pc-period { display: inline-block; font-size: 9px; color: #fff; background: #7c74f0; border-radius: 8px; padding: 1px 7px; margin-left: 4px; }
+  .pc-item ul { margin: 4px 0 0 15px; padding: 0; }
+  .pc-item li { font-size: 9.5px; margin-bottom: 1.5px; color: #45455a; }
+  .pc-line { margin-bottom: 4px; }
+  .pc-url { color: #5b52e8; font-size: 9px; margin-left: 4px; }
+
+  // Habilidades como pills (estilo web)
+  .pc-skills { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pc-pill {
+    background: #eef0fb; color: #4740d4;
+    border-radius: 10px; padding: 2px 9px;
+    font-size: 9px; font-weight: 600;
+  }
+}
+
+// ── Overrides de tema oscuro sobre las superficies del componente ─────────────
+:root[data-theme="dark"] {
+
+  app-home .section-white { background: var(--bg) !important; }
+  app-home .section-gray  { background: var(--bg-gray) !important; }
+
+  // Hero: gradiente oscuro
+  app-home .hero-section {
+    background: linear-gradient(175deg, #10131c 0%, #131829 55%, #0f1420 100%) !important;
+  }
+  // Olas del hero → tonos oscuros
+  app-home .wave-3 path { fill: #182135 !important; }
+  app-home .wave-2 path { fill: #141a2b !important; }
+  app-home .wave-1 path { fill: #0f1117 !important; }
+
+  // Navbar
+  app-home #navbar {
+    background: rgba(15, 17, 23, 0.85) !important;
+    border-bottom: 1px solid var(--border);
+  }
+  app-home .nav-link { color: var(--text) !important; }
+  app-home .navbar-brand { color: var(--text-strong) !important; }
+  // Botones de icono (GitHub, IG, tema, idioma) — visibles en oscuro
+  app-home .nav-icon-btn {
+    color: var(--text) !important;
+    background: #1e2230 !important;
+    border: 1px solid var(--border) !important;
+    &:hover { background: #2a2f40 !important; color: #fff !important; }
+  }
+
+  // Títulos (brillantes)
+  app-home .section-title,
+  app-home .hero-name,
+  app-home .tray-subtitle,
+  app-home .info-val,
+  app-home .stat-n,
+  app-home .tl-role,
+  app-home .edu-degree,
+  app-home .cert-name,
+  app-home .project-title { color: var(--text-strong) !important; }
+
+  // Texto de cuerpo (legible)
+  app-home .section-body,
+  app-home .hero-desc,
+  app-home .about-text,
+  app-home .project-subtitle,
+  app-home .project-desc,
+  app-home .project-why,
+  app-home .tl-bullets li,
+  app-home .project-highlights li,
+  app-home .also-list li,
+  app-home .edu-inst,
+  app-home .cert-detail { color: var(--text) !important; }
+
+  // Meta / secundario (atenuado)
+  app-home .tl-org,
+  app-home .tl-period,
+  app-home .info-label,
+  app-home .stat-l,
+  app-home .map-label { color: var(--text-muted) !important; }
+
+  // Tarjetas y superficies
+  app-home .info-card,
+  app-home .contact-form,
+  app-home .edu-card,
+  app-home .cert-item,
+  app-home .tilt-card,
+  app-home .map-wrapper,
+  app-home .gallery-empty,
+  app-home .stats-row,
+  app-home .testi-card {
+    background: var(--surface) !important;
+    border-color: var(--border) !important;
+  }
+  app-home .info-row,
+  app-home .stats-row .stat-divider { border-color: var(--border) !important; background-color: var(--border) !important; }
+  app-home .map-label { background: var(--surface) !important; }
+  app-home .stats-row { box-shadow: none !important; }
+
+  // Testimonios
+  app-home .testi-card blockquote { color: var(--text) !important; }
+  app-home .testi-name { color: var(--text-strong) !important; }
+  app-home .testi-role { color: var(--text-muted) !important; }
+
+  // Formulario de contacto
+  app-home .form-field input,
+  app-home .form-field textarea {
+    background: #0f1219 !important;
+    border-color: var(--border) !important;
+    color: var(--text) !important;
+  }
+  app-home .form-field label { color: var(--text) !important; }
+
+  // Pills de habilidades
+  app-home .pill { background: #232838 !important; color: #c8cce0 !important; }
+
+  // Proyectos
+  app-home .project-item { border-color: var(--border) !important; }
+  // El fade blanco de "Leer más" → se difumina hacia el fondo oscuro
+  app-home .desc-fade { background: linear-gradient(to bottom, transparent, var(--bg)) !important; }
+
+  // Timeline
+  app-home .timeline::before { background: var(--border) !important; }
+  app-home .tl-body { background: transparent; }
+
+  // Footer / open-to-bar
+  app-home .open-to-bar { background: var(--surface) !important; border-color: var(--border) !important; }
+}

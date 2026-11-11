@@ -1,0 +1,15 @@
+{
+  "name": "Neyder Neme — Portafolio",
+  "short_name": "Neyder Neme",
+  "description": "Desarrollador Full-Stack e IoT. Aplicaciones web modernas, sistemas IoT y soluciones embebidas.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f1117",
+  "theme_color": "#5b52e8",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+  ]
+}

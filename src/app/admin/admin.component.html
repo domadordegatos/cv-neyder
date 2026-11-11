@@ -1,0 +1,222 @@
+<!-- LOGIN -->
+<div class="admin-login" *ngIf="!authed">
+  <form class="login-card" (submit)="$event.preventDefault(); login()">
+    <h1 class="login-title">Panel privado</h1>
+    <p class="login-sub">Acceso restringido</p>
+    <div class="field">
+      <label for="u">Usuario</label>
+      <input id="u" type="text" [(ngModel)]="user" name="u" autocomplete="off" />
+    </div>
+    <div class="field">
+      <label for="p">Contraseña</label>
+      <input id="p" type="password" [(ngModel)]="pass" name="p" />
+    </div>
+    <p class="login-err" *ngIf="loginError">{{ loginError }}</p>
+    <button type="submit" class="login-btn">Ingresar</button>
+    <a routerLink="/home" class="login-back">← Volver al sitio</a>
+  </form>
+</div>
+
+<!-- PANEL -->
+<div class="admin-panel" *ngIf="authed">
+  <header class="admin-head">
+    <div>
+      <h1>Panel de datos</h1>
+      <p>
+        Contenido almacenado en MongoDB
+        <span class="live-dot" *ngIf="liveOn" title="Tiempo real activo">● En vivo</span>
+      </p>
+    </div>
+    <div class="head-actions">
+      <button class="btn-ghost" (click)="refresh()">↻ Actualizar</button>
+      <button class="btn-ghost" (click)="logout()">Salir</button>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button *ngFor="let t of ['contacts','projects','experience','education','certifications','skills','testimonials','config','analytics']"
+            class="tab" [class.active]="active === t" (click)="active = $any(t)">
+      {{ t === 'contacts' ? 'Contactos' :
+         t === 'projects' ? 'Proyectos' :
+         t === 'experience' ? 'Experiencia' :
+         t === 'education' ? 'Formación' :
+         t === 'certifications' ? 'Certificaciones' :
+         t === 'skills' ? 'Habilidades' :
+         t === 'testimonials' ? 'Testimonios' :
+         t === 'config' ? 'Perfil' : 'Analítica' }}
+      <span class="badge" *ngIf="t !== 'config' && t !== 'analytics'">{{ count(t) }}</span>
+    </button>
+  </nav>
+
+  <p class="admin-error" *ngIf="error">{{ error }}</p>
+  <p class="admin-loading" *ngIf="loading">Cargando…</p>
+
+  <!-- CONTACTOS (solo lectura) -->
+  <section *ngIf="active === 'contacts'">
+    <div class="empty" *ngIf="!contacts.length && !loading">Aún no hay mensajes registrados.</div>
+    <div class="cards" *ngIf="contacts.length">
+      <div class="contact-card" *ngFor="let c of contacts">
+        <div class="cc-head">
+          <span class="cc-name">{{ c.name || '—' }}</span>
+          <span class="cc-date">{{ fmtDate(c.createdAt) }}</span>
+        </div>
+        <a class="cc-email" [href]="'mailto:' + c.email">{{ c.email }}</a>
+        <p class="cc-msg">{{ c.message }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANALÍTICA -->
+  <section *ngIf="active === 'analytics'">
+    <div class="stat-cards">
+      <div class="stat-card"><span class="stat-num">{{ totalVisits }}</span><span class="stat-lbl">Visitas totales</span></div>
+      <div class="stat-card"><span class="stat-num">{{ visits7d }}</span><span class="stat-lbl">Últimos 7 días</span></div>
+      <div class="stat-card"><span class="stat-num">{{ visitsToday }}</span><span class="stat-lbl">Hoy</span></div>
+    </div>
+
+    <p class="cert-label" style="margin-top:24px">Proyectos más abiertos</p>
+    <div class="empty" *ngIf="!topProjects.length">Aún no hay clics registrados.</div>
+    <div class="rows" *ngIf="topProjects.length">
+      <div class="row-item" *ngFor="let p of topProjects">
+        <div class="row-main"><strong>{{ p.label }}</strong></div>
+        <div class="row-actions"><span class="count-pill">{{ p.n }}</span></div>
+      </div>
+    </div>
+
+    <p class="cert-label" style="margin-top:20px">Orígenes de tráfico</p>
+    <div class="empty" *ngIf="!topReferrers.length">Sin datos de origen todavía.</div>
+    <div class="rows" *ngIf="topReferrers.length">
+      <div class="row-item" *ngFor="let r of topReferrers">
+        <div class="row-main"><strong>{{ r.label }}</strong></div>
+        <div class="row-actions"><span class="count-pill">{{ r.n }}</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERFIL / CONTACTO -->
+  <section *ngIf="active === 'config'">
+    <div class="empty" *ngIf="!config.length && !loading">No hay documento de perfil en la BD.</div>
+    <div class="rows" *ngIf="config.length">
+      <div class="row-item">
+        <div class="row-main">
+          <strong>Información de contacto</strong>
+          <span class="muted">Email: {{ config[0].email }}</span>
+          <span class="muted">WhatsApp: {{ config[0].whatsapp || '(sin número)' }} · {{ config[0].whatsappLabel }}</span>
+          <span class="muted">GitHub: {{ config[0].githubLabel }}</span>
+          <span class="muted">Instagram: {{ config[0].instagramLabel }}</span>
+        </div>
+        <div class="row-actions">
+          <button class="mini primary" (click)="openEdit('config', config[0])">Editar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLECCIONES EDITABLES -->
+  <ng-container *ngFor="let cfg of [
+      {col:'projects', label:'proyecto', title:(active==='projects')},
+      {col:'experience', label:'experiencia', title:(active==='experience')},
+      {col:'education', label:'formación', title:(active==='education')},
+      {col:'certifications', label:'certificación', title:(active==='certifications')},
+      {col:'skills', label:'habilidad', title:(active==='skills')},
+      {col:'testimonials', label:'testimonio', title:(active==='testimonials')} ]">
+    <section *ngIf="cfg.title">
+      <div class="section-bar">
+        <button class="btn-add" (click)="openNew($any(cfg.col))">+ Agregar {{ cfg.label }}</button>
+      </div>
+      <div class="empty" *ngIf="!count(cfg.col) && !loading">Sin registros en la BD.</div>
+      <div class="rows">
+        <div class="row-item" *ngFor="let it of $any(this)[cfg.col]" [class.inactive]="!isActive(it)">
+          <div class="row-main">
+            <strong>{{ it.title || it.degree || it.name || it.role }}</strong>
+            <span class="muted">{{ it.subtitle || it.org || it.institution || it.detail || it.category || it.role }}</span>
+            <span class="chips" *ngIf="it.tags"><span class="chip" *ngFor="let t of it.tags">{{ t }}</span></span>
+          </div>
+          <div class="row-actions">
+            <button class="mini icon" title="Subir" (click)="move($any(cfg.col), it, -1)">↑</button>
+            <button class="mini icon" title="Bajar" (click)="move($any(cfg.col), it, 1)">↓</button>
+            <span class="state" [class.on]="isActive(it)">{{ isActive(it) ? 'Activo' : 'Oculto' }}</span>
+            <button class="mini" (click)="toggleActive($any(cfg.col), it)">
+              {{ isActive(it) ? 'Desactivar' : 'Activar' }}
+            </button>
+            <button class="mini primary" (click)="openEdit($any(cfg.col), it)">Editar</button>
+            <button class="mini danger" title="Eliminar" (click)="deleteItem($any(cfg.col), it)">✕</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-container>
+</div>
+
+<!-- EDITOR MODAL -->
+<div class="editor-overlay" *ngIf="editorOpen" (click)="closeEditor()">
+  <form class="editor" (click)="$event.stopPropagation()" (submit)="$event.preventDefault(); save()">
+    <div class="editor-head">
+      <h2>{{ editingId ? 'Editar' : 'Nuevo' }} — {{ editingCol }}</h2>
+      <button type="button" class="x" (click)="closeEditor()">✕</button>
+    </div>
+
+    <div class="editor-body">
+      <div class="ef" *ngFor="let f of schema">
+        <label>{{ f.label }}</label>
+
+        <input *ngIf="f.type === 'text'" type="text" [(ngModel)]="form[f.key]" [name]="f.key" />
+
+        <textarea *ngIf="f.type === 'textarea'" rows="3" [(ngModel)]="form[f.key]" [name]="f.key"></textarea>
+
+        <input *ngIf="f.type === 'number'" type="number" [(ngModel)]="form[f.key]" [name]="f.key" />
+
+        <label class="switch" *ngIf="f.type === 'bool'">
+          <input type="checkbox" [(ngModel)]="form[f.key]" [name]="f.key" />
+          <span>{{ form[f.key] ? 'Sí' : 'No' }}</span>
+        </label>
+
+        <select *ngIf="f.type === 'select'" [(ngModel)]="form[f.key]" [name]="f.key">
+          <option *ngFor="let o of f.options" [value]="o">{{ o }}</option>
+        </select>
+
+        <textarea *ngIf="f.type === 'lines' || f.type === 'tags' || f.type === 'urls'"
+                  rows="3" [(ngModel)]="text[f.key]" [name]="f.key"></textarea>
+
+        <div class="creds" *ngIf="f.type === 'creds'">
+          <input type="text" placeholder="usuario" [(ngModel)]="credUser" name="cred_user" />
+          <input type="text" placeholder="contraseña" [(ngModel)]="credPass" name="cred_pass" />
+        </div>
+
+        <!-- Galería de imágenes (capturas) -->
+        <div class="uploader" *ngIf="f.type === 'images'">
+          <div class="thumbs">
+            <div class="thumb" *ngFor="let img of form[f.key]; let i = index">
+              <img [src]="img" alt="" />
+              <button type="button" class="thumb-x" (click)="removeImage(f.key, i)">✕</button>
+            </div>
+            <label class="thumb add">
+              <input type="file" accept="image/*" multiple (change)="onPickImages(f.key, $event)" hidden />
+              <span *ngIf="uploadingField !== f.key">+ Subir</span>
+              <span *ngIf="uploadingField === f.key">Subiendo…</span>
+            </label>
+          </div>
+          <small class="hint">Se suben al hosting y se convierten a WebP automáticamente.</small>
+        </div>
+
+        <!-- Ícono (una imagen o URL) -->
+        <div class="icon-field" *ngIf="f.type === 'icon'">
+          <div class="icon-preview" *ngIf="form[f.key]"><img [src]="form[f.key]" alt="" /></div>
+          <div class="icon-controls">
+            <input type="text" placeholder="URL del icono" [(ngModel)]="form[f.key]" [name]="f.key" />
+            <label class="icon-upload">
+              <input type="file" accept="image/*" (change)="onPickIcon(f.key, $event)" hidden />
+              {{ uploadingField === f.key ? 'Subiendo…' : 'Subir' }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="editor-err" *ngIf="saveError">{{ saveError }}</p>
+    <div class="editor-foot">
+      <button type="button" class="btn-ghost" (click)="closeEditor()">Cancelar</button>
+      <button type="submit" class="btn-save" [disabled]="saving">{{ saving ? 'Guardando…' : 'Guardar' }}</button>
+    </div>
+  </form>
+</div>
