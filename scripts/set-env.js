@@ -32,27 +32,7 @@ const API_URL = env.API_URL || 'https://api.nncoms.com';
 const API_DB = env.API_DB || 'cvneyder';
 const API_KEY = env.API_KEY || '';
 
-/**
- * La configuración de Firebase sí va escrita aquí: las apiKey web de Firebase
- * son públicas por diseño —viajan en el bundle de cualquier app— y lo que
- * protege los datos son las reglas de seguridad, no esconder esta cadena.
- * Sacarla al entorno daría una falsa sensación de seguridad y rompería el
- * build de quien clone el repo.
- */
-const firebase = {
-  apiKey: 'AIzaSyBbhLXCJa97QSkTBG0SJKsZrMKu5_GgaO0',
-  authDomain: 'cv-neyder.firebaseapp.com',
-  databaseURL: 'https://cv-neyder-default-rtdb.firebaseio.com',
-  projectId: 'cv-neyder',
-  storageBucket: 'cv-neyder.appspot.com',
-  messagingSenderId: '634202452592',
-  appId: '1:634202452592:web:19d51cee862fbcb4a97ab5',
-};
-
 function contenido(produccion) {
-  const fb = Object.entries(firebase)
-    .map(([k, v]) => `    ${k}: '${v}',`)
-    .join('\n');
   return `// ARCHIVO GENERADO por scripts/set-env.js. No lo edites a mano:
 // se reescribe en cada build y está en .gitignore.
 // Para cambiar la clave de la API edita el .env de la raíz.
@@ -63,9 +43,6 @@ export const environment = {
     url: '${API_URL}',
     key: '${API_KEY}',
     db: '${API_DB}',
-  },
-  firebaseConfig: {
-${fb}
   },
 };
 `;
