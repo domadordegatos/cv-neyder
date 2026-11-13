@@ -14,7 +14,12 @@
 Options -MultiViews
 RewriteEngine On
 
+# Solo se reescribe a index.html lo que no corresponde a un archivo (!-f) ni a
+# un directorio (!-d) real en disco. Sin el !-d, una carpeta que exista de
+# verdad en el docroot —hoy solo assets/— se tragaba la reescritura en vez de
+# servirse como lo que es.
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.html [QSA,L]
 
 <Files "index.html">
