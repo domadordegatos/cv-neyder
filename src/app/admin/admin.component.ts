@@ -50,14 +50,19 @@ export class AdminComponent implements OnDestroy {
   readonly schemas: Record<string, Field[]> = {
     projects: [
       { key: 'title', label: 'Título', type: 'text' },
+      { key: 'titleEn', label: 'Título — inglés', type: 'text' },
       { key: 'subtitle', label: 'Subtítulo', type: 'text' },
+      { key: 'subtitleEn', label: 'Subtítulo — inglés', type: 'text' },
       { key: 'desc', label: 'Descripción', type: 'textarea' },
+      { key: 'descEn', label: 'Descripción — inglés', type: 'textarea' },
       { key: 'why', label: '¿Por qué? (opcional)', type: 'textarea' },
+      { key: 'whyEn', label: '¿Por qué? — inglés', type: 'textarea' },
       { key: 'highlights', label: 'Puntos clave (uno por línea)', type: 'lines' },
+      { key: 'highlightsEn', label: 'Puntos clave — inglés (uno por línea)', type: 'lines' },
       { key: 'tags', label: 'Tecnologías (separadas por coma)', type: 'tags' },
       { key: 'repo', label: 'Repositorio (URL, opcional)', type: 'text' },
       { key: 'screenshots', label: 'Capturas', type: 'images' },
-      { key: 'urls', label: 'Enlaces (formato: etiqueta | url | descripción)', type: 'urls' },
+      { key: 'urls', label: 'Enlaces (etiqueta | url | descripción | etiqueta en inglés | descripción en inglés)', type: 'urls' },
       { key: 'credentials', label: 'Credenciales demo', type: 'creds' },
       { key: 'order', label: 'Orden', type: 'number' },
       { key: 'active', label: 'Activo (visible en la CV)', type: 'bool' },
@@ -71,17 +76,24 @@ export class AdminComponent implements OnDestroy {
     ],
     experience: [
       { key: 'role', label: 'Cargo', type: 'text' },
+      { key: 'roleEn', label: 'Cargo — inglés', type: 'text' },
       { key: 'org', label: 'Organización', type: 'text' },
+      { key: 'orgEn', label: 'Organización — inglés', type: 'text' },
       { key: 'location', label: 'Ubicación', type: 'text' },
+      { key: 'locationEn', label: 'Ubicación — inglés', type: 'text' },
       { key: 'period', label: 'Periodo', type: 'text' },
+      { key: 'periodEn', label: 'Periodo — inglés', type: 'text' },
       { key: 'current', label: 'Actual', type: 'bool' },
       { key: 'bullets', label: 'Detalles (uno por línea)', type: 'lines' },
+      { key: 'bulletsEn', label: 'Detalles — inglés (uno por línea)', type: 'lines' },
       { key: 'order', label: 'Orden', type: 'number' },
       { key: 'active', label: 'Activo', type: 'bool' },
     ],
     education: [
       { key: 'degree', label: 'Título', type: 'text' },
+      { key: 'degreeEn', label: 'Título — inglés', type: 'text' },
       { key: 'institution', label: 'Institución', type: 'text' },
+      { key: 'institutionEn', label: 'Institución — inglés', type: 'text' },
       { key: 'year', label: 'Año', type: 'text' },
       { key: 'icon', label: 'Icono (clase bi-*)', type: 'text' },
       { key: 'highlight', label: 'Destacado', type: 'bool' },
@@ -90,7 +102,9 @@ export class AdminComponent implements OnDestroy {
     ],
     certifications: [
       { key: 'name', label: 'Nombre', type: 'text' },
+      { key: 'nameEn', label: 'Nombre — inglés', type: 'text' },
       { key: 'detail', label: 'Detalle', type: 'text' },
+      { key: 'detailEn', label: 'Detalle — inglés', type: 'text' },
       { key: 'year', label: 'Año', type: 'text' },
       { key: 'icon', label: 'Icono (clase bi-*)', type: 'text' },
       { key: 'order', label: 'Orden', type: 'number' },
@@ -254,7 +268,13 @@ export class AdminComponent implements OnDestroy {
       if (f.type === 'lines') this.text[f.key] = (this.form[f.key] || []).join('\n');
       else if (f.type === 'tags') this.text[f.key] = (this.form[f.key] || []).join(', ');
       else if (f.type === 'urls') this.text[f.key] = (this.form[f.key] || [])
-        .map((u: any) => [u.label, u.url, u.desc].filter(Boolean).join(' | ')).join('\n');
+        .map((u: any) => {
+          // Las dos últimas columnas son la traducción, y son opcionales: si no
+          // hay inglés se recorta la línea en vez de dejar separadores sueltos.
+          const partes = [u.label, u.url, u.desc, u.labelEn, u.descEn];
+          while (partes.length && !partes[partes.length - 1]) partes.pop();
+          return partes.map((p: any) => p || '').join(' | ');
+        }).join('\n');
       else if (f.type === 'images' && !Array.isArray(this.form[f.key])) this.form[f.key] = [];
       else if (f.type === 'icon' && this.form[f.key] == null) this.form[f.key] = '';
     }
@@ -317,8 +337,13 @@ export class AdminComponent implements OnDestroy {
           break;
         case 'urls':
           doc[f.key] = (this.text[f.key] || '').split('\n').map(s => s.trim()).filter(Boolean).map(line => {
-            const [label, url, desc] = line.split('|').map(p => p.trim());
-            return { label: label || '', url: url || '', ...(desc ? { desc } : {}) };
+            const [label, url, desc, labelEn, descEn] = line.split('|').map(p => p.trim());
+            return {
+              label: label || '', url: url || '',
+              ...(desc ? { desc } : {}),
+              ...(labelEn ? { labelEn } : {}),
+              ...(descEn ? { descEn } : {}),
+            };
           });
           break;
         case 'creds': {

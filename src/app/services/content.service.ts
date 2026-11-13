@@ -4,15 +4,20 @@ import { catchError, map } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
 // ── Tipos del contenido (deben coincidir con los documentos en Mongo) ──────────
+//
+// Los campos terminados en `En` son la traducción al inglés y SIEMPRE son
+// opcionales: si faltan o vienen vacíos, LanguageService.tx() devuelve el
+// español. Así se puede traducir de a poco sin romper la versión en inglés.
 export interface Skill { _id?: string; active?: boolean; category: 'front' | 'back' | 'hard'; name: string; icon: string; order?: number; }
-export interface ExperienceItem { _id?: string; active?: boolean; role: string; org: string; location: string; period: string; current: boolean; bullets: string[]; order?: number; }
-export interface EducationItem { _id?: string; active?: boolean; degree: string; institution: string; year: string; icon: string; highlight: boolean; order?: number; }
-export interface CertItem { _id?: string; active?: boolean; name: string; detail: string; year: string; icon: string; order?: number; }
-export interface ProjectUrl { label: string; url: string; desc?: string; }
+export interface ExperienceItem { _id?: string; active?: boolean; role: string; org: string; location: string; period: string; current: boolean; bullets: string[]; order?: number; roleEn?: string; orgEn?: string; locationEn?: string; periodEn?: string; bulletsEn?: string[]; }
+export interface EducationItem { _id?: string; active?: boolean; degree: string; institution: string; year: string; icon: string; highlight: boolean; order?: number; degreeEn?: string; institutionEn?: string; }
+export interface CertItem { _id?: string; active?: boolean; name: string; detail: string; year: string; icon: string; order?: number; nameEn?: string; detailEn?: string; }
+export interface ProjectUrl { label: string; url: string; desc?: string; labelEn?: string; descEn?: string; }
 export interface Project {
   _id?: string; active?: boolean;
   title: string; subtitle?: string; desc?: string; why?: string;
-  highlights?: string[]; tags?: string[];
+  titleEn?: string; subtitleEn?: string; descEn?: string; whyEn?: string;
+  highlights?: string[]; highlightsEn?: string[]; tags?: string[];
   repo?: string | null; demo?: string | null;
   screenshots?: string[]; urls?: ProjectUrl[];
   credentials?: { user: string; pass: string } | null;

@@ -689,6 +689,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   /** Atajo para traducir textos fijos de interfaz. */
   t(key: string): string { return this.lang.t(key); }
 
+  /** Atajo para el CONTENIDO que viene de Mongo. Devuelve `campoEn` si hay
+   *  traducción cargada y el idioma activo es inglés; si no, el español. */
+  tx(obj: any, campo: string): any { return this.lang.tx(obj, campo); }
+
   ngOnInit(): void {
     AOS.init({ duration: 700, once: true, offset: 60 });
     this.content.trackVisit();

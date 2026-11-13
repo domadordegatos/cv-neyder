@@ -90,51 +90,43 @@
       <div class="col-lg-7" data-aos="fade-up">
         <p class="section-label">{{ t('lbl_about') }}</p>
         <h2 class="section-title">{{ t('title_about') }}</h2>
-        <p class="section-body">
-          Soy Neyder, desarrollador full-stack con experiencia en el ecosistema web moderno.
-          Me especializo en <strong>Angular</strong>, <strong>Firebase</strong> y <strong>Node.js</strong>
-          para construir aplicaciones rápidas y escalables.
-        </p>
-        <p class="section-body">
-          También me apasiona el hardware: he desarrollado proyectos IoT con
-          <strong>Arduino</strong> que combinan software y electrónica para resolver
-          problemas reales. Me encanta cuando el código hace cosas en el mundo físico.
-        </p>
+        <p class="section-body" [innerHTML]="t('about_p1')"></p>
+        <p class="section-body" [innerHTML]="t('about_p2')"></p>
       </div>
       <div class="col-lg-5" data-aos="fade-up" data-aos-delay="100">
         <div class="info-card">
           <div class="info-row">
-            <span class="info-label">Nombre</span>
+            <span class="info-label">{{ t('info_name') }}</span>
             <span class="info-val">Neyder Neme</span>
           </div>
           <div class="info-row">
-            <span class="info-label">Perfil</span>
+            <span class="info-label">{{ t('info_profile') }}</span>
             <span class="info-val">Full-Stack / IoT</span>
           </div>
           <div class="info-row">
-            <span class="info-label">Disponibilidad</span>
+            <span class="info-label">{{ t('info_avail') }}</span>
             <span class="info-val avail">
-              <span class="avail-dot"></span>Disponible
+              <span class="avail-dot"></span>{{ t('info_avail_val') }}
             </span>
           </div>
           <div class="info-row">
-            <span class="info-label">Idiomas</span>
-            <span class="info-val">Español · Inglés</span>
+            <span class="info-label">{{ t('info_langs') }}</span>
+            <span class="info-val">{{ t('info_langs_val') }}</span>
           </div>
           <div class="info-row border-0">
-            <span class="info-label">Email</span>
+            <span class="info-label">{{ t('info_email') }}</span>
             <span class="info-val">{{ profile.email }}</span>
           </div>
         </div>
         <div class="stats-row">
           <div class="stat-item">
             <span class="stat-n">4+</span>
-            <span class="stat-l">años de experiencia</span>
+            <span class="stat-l">{{ t('stat_years') }}</span>
           </div>
           <div class="stat-divider"></div>
           <div class="stat-item">
             <span class="stat-n">10+</span>
-            <span class="stat-l">proyectos terminados</span>
+            <span class="stat-l">{{ t('stat_projects') }}</span>
           </div>
         </div>
       </div>
@@ -232,8 +224,8 @@
 
               <!-- Left: text -->
               <div class="project-text">
-                <h3 class="project-title">{{ p.title }}</h3>
-                <p class="project-subtitle">{{ p.subtitle }}</p>
+                <h3 class="project-title">{{ tx(p, 'title') }}</h3>
+                <p class="project-subtitle">{{ tx(p, 'subtitle') }}</p>
 
                 <!-- Widget IoT en vivo (solo Huerto) -->
                 <div class="iot-live" *ngIf="isHuerto(p) && iot">
@@ -258,14 +250,14 @@
                 </div>
                 <div class="project-expandable">
                   <div class="project-desc-wrap">
-                    <p class="project-desc">{{ p.desc }}</p>
+                    <p class="project-desc">{{ tx(p, 'desc') }}</p>
                     <div class="desc-fade"></div>
                   </div>
                   <div class="project-extras">
-                    <ul *ngIf="p.highlights && p.highlights.length" class="project-highlights">
-                      <li *ngFor="let h of p.highlights"><i class="bi bi-check2"></i> {{ h }}</li>
+                    <ul *ngIf="tx(p, 'highlights') && tx(p, 'highlights').length" class="project-highlights">
+                      <li *ngFor="let h of tx(p, 'highlights')"><i class="bi bi-check2"></i> {{ h }}</li>
                     </ul>
-                    <p *ngIf="p.why" class="project-why"><i class="bi bi-lightbulb"></i> {{ p.why }}</p>
+                    <p *ngIf="tx(p, 'why')" class="project-why"><i class="bi bi-lightbulb"></i> {{ tx(p, 'why') }}</p>
                   </div>
                 </div>
                 <button class="project-toggle-btn" (click)="toggleExpand(i)">
@@ -284,7 +276,7 @@
               <div *ngIf="p.screenshots && p.screenshots.length" class="project-gallery">
                 <!-- Main image -->
                 <div class="gallery-main">
-                  <img [src]="p.screenshots[getIdx(i)]" alt="Captura de {{ p.title }}" class="gallery-main-img" [class.fade-out]="fadingOut[i]" (click)="openLightbox(i)" loading="lazy" decoding="async" />
+                  <img [src]="p.screenshots[getIdx(i)]" alt="{{ t('alt_shot') }} {{ tx(p, 'title') }}" class="gallery-main-img" [class.fade-out]="fadingOut[i]" (click)="openLightbox(i)" loading="lazy" decoding="async" />
                   <button class="gallery-btn gallery-prev" (click)="prevShot(i, p.screenshots.length)"><i class="bi bi-chevron-left"></i></button>
                   <button class="gallery-btn gallery-next" (click)="nextShot(i, p.screenshots.length)"><i class="bi bi-chevron-right"></i></button>
                 </div>
@@ -302,8 +294,8 @@
             <!-- Full-width bottom row -->
             <div class="project-bottom-row">
               <div *ngIf="p.urls && p.urls.length" class="url-chips">
-                <a *ngFor="let u of p.urls" [href]="u.url" target="_blank" class="url-chip" [title]="u.desc">
-                  <span class="url-label">{{ u.label }}</span>
+                <a *ngFor="let u of p.urls" [href]="u.url" target="_blank" class="url-chip" [title]="tx(u, 'desc')">
+                  <span class="url-label">{{ tx(u, 'label') }}</span>
                   <i class="bi bi-box-arrow-up-right"></i>
                 </a>
               </div>
@@ -312,9 +304,9 @@
                 <i class="bi bi-key"></i>
                 <code>{{ p.credentials.user }}</code><span class="cred-sep">/</span><code>{{ p.credentials.pass }}</code>
               </div>
-              <a *ngIf="p.demo" [href]="p.demo" target="_blank" class="project-read-more">Ver proyecto <i class="bi bi-arrow-right"></i></a>
-              <a *ngIf="p.repo" [href]="p.repo" target="_blank" class="project-gh"><i class="bi bi-github me-1"></i>Código</a>
-              <span *ngIf="!p.demo && !p.repo && !p.credentials" class="project-wip">Proyecto privado</span>
+              <a *ngIf="p.demo" [href]="p.demo" target="_blank" class="project-read-more">{{ t('btn_view') }} <i class="bi bi-arrow-right"></i></a>
+              <a *ngIf="p.repo" [href]="p.repo" target="_blank" class="project-gh"><i class="bi bi-github me-1"></i>{{ t('btn_code') }}</a>
+              <span *ngIf="!p.demo && !p.repo && !p.credentials" class="project-wip">{{ t('badge_private') }}</span>
             </div>
 
           </article>
@@ -351,13 +343,13 @@
           <div class="tl-dot" [class.tl-dot--current]="e.current"></div>
           <div class="tl-body">
             <div class="tl-head">
-              <span class="tl-role">{{ e.role }}</span>
+              <span class="tl-role">{{ tx(e, 'role') }}</span>
               <span class="tl-badge" *ngIf="e.current">{{ t('badge_current') }}</span>
             </div>
-            <p class="tl-org"><i class="bi bi-building"></i> {{ e.org }} · {{ e.location }}</p>
-            <p class="tl-period"><i class="bi bi-calendar3"></i> {{ e.period }}</p>
+            <p class="tl-org"><i class="bi bi-building"></i> {{ tx(e, 'org') }} · {{ tx(e, 'location') }}</p>
+            <p class="tl-period"><i class="bi bi-calendar3"></i> {{ tx(e, 'period') }}</p>
             <ul class="tl-bullets">
-              <li *ngFor="let b of e.bullets"><i class="bi bi-check2"></i> {{ b }}</li>
+              <li *ngFor="let b of tx(e, 'bullets')"><i class="bi bi-check2"></i> {{ b }}</li>
             </ul>
           </div>
         </div>
@@ -372,8 +364,8 @@
              [class.edu-card--highlight]="e.highlight" [style.transition-delay.ms]="i * 110">
           <i class="bi {{ e.icon }} edu-icon"></i>
           <div>
-            <p class="edu-degree">{{ e.degree }}</p>
-            <p class="edu-inst">{{ e.institution }}</p>
+            <p class="edu-degree">{{ tx(e, 'degree') }}</p>
+            <p class="edu-inst">{{ tx(e, 'institution') }}</p>
             <span class="edu-year">{{ e.year }}</span>
           </div>
         </div>
@@ -385,8 +377,8 @@
              [style.transition-delay.ms]="i * 90">
           <i class="bi {{ c.icon }}"></i>
           <div>
-            <span class="cert-name">{{ c.name }}</span>
-            <span class="cert-detail">{{ c.detail }} · {{ c.year }}</span>
+            <span class="cert-name">{{ tx(c, 'name') }}</span>
+            <span class="cert-detail">{{ tx(c, 'detail') }} · {{ c.year }}</span>
           </div>
         </div>
       </div>
@@ -484,7 +476,7 @@
             <span *ngIf="contactStatus === 'sending'"><i class="bi bi-arrow-repeat spin ms-1"></i> {{ t('form_sending') }}</span>
             <span *ngIf="contactStatus === 'sent'"><i class="bi bi-check2-circle ms-1"></i> {{ t('form_sent') }}</span>
           </button>
-          <p *ngIf="contactStatus === 'error'" class="contact-error">Hubo un error. Escríbeme directamente a soporte&#64;nncoms.com</p>
+          <p *ngIf="contactStatus === 'error'" class="contact-error">{{ t('form_error') }} {{ profile.email }}</p>
         </form>
       </div>
 
@@ -497,7 +489,7 @@
   <header class="pc-head">
     <div class="pc-head-text">
       <h1>Neyder Neme</h1>
-      <p class="pc-role">Desarrollador Full-Stack &amp; IoT</p>
+      <p class="pc-role">{{ t('pc_role') }}</p>
       <p class="pc-contact">
         {{ profile.email }} · {{ profile.githubLabel }} · {{ profile.instagramLabel }}
         <span *ngIf="profile.whatsappLabel"> · WhatsApp: {{ profile.whatsappLabel }}</span>
@@ -507,43 +499,40 @@
     <img class="pc-photo" src="assets/IMG_20211221_100144.webp" alt="Neyder Neme" />
   </header>
 
-  <p class="pc-summary">
-    Construyo desde la interfaz hasta el hardware: aplicaciones web modernas,
-    sistemas IoT y soluciones embebidas que resuelven problemas reales.
-  </p>
+  <p class="pc-summary">{{ t('hero_desc') }}</p>
 
   <section class="pc-sec">
-    <h2>Experiencia</h2>
+    <h2>{{ t('pc_exp') }}</h2>
     <div class="pc-item" *ngFor="let e of experience">
-      <strong>{{ e.role }}</strong> — {{ e.org }}, {{ e.location }}
-      <span class="pc-period">{{ e.period }}</span>
-      <ul><li *ngFor="let b of e.bullets">{{ b }}</li></ul>
+      <strong>{{ tx(e, 'role') }}</strong> — {{ tx(e, 'org') }}, {{ tx(e, 'location') }}
+      <span class="pc-period">{{ tx(e, 'period') }}</span>
+      <ul><li *ngFor="let b of tx(e, 'bullets')">{{ b }}</li></ul>
     </div>
   </section>
 
   <section class="pc-sec">
-    <h2>Formación</h2>
+    <h2>{{ t('pc_edu') }}</h2>
     <div class="pc-line" *ngFor="let e of education">
-      <strong>{{ e.degree }}</strong> — {{ e.institution }} ({{ e.year }})
+      <strong>{{ tx(e, 'degree') }}</strong> — {{ tx(e, 'institution') }} ({{ e.year }})
     </div>
   </section>
 
   <section class="pc-sec">
-    <h2>Certificaciones</h2>
-    <div class="pc-line" *ngFor="let c of certifications">{{ c.name }} — {{ c.detail }} ({{ c.year }})</div>
+    <h2>{{ t('pc_certs') }}</h2>
+    <div class="pc-line" *ngFor="let c of certifications">{{ tx(c, 'name') }} — {{ tx(c, 'detail') }} ({{ c.year }})</div>
   </section>
 
   <section class="pc-sec">
-    <h2>Habilidades</h2>
+    <h2>{{ t('pc_skills') }}</h2>
     <div class="pc-skills">
       <span class="pc-pill" *ngFor="let s of allSkillsList">{{ s }}</span>
     </div>
   </section>
 
   <section class="pc-sec">
-    <h2>Proyectos destacados</h2>
+    <h2>{{ t('pc_projects') }}</h2>
     <div class="pc-line" *ngFor="let p of projects">
-      <strong>{{ p.title }}</strong> — {{ p.subtitle }}
+      <strong>{{ tx(p, 'title') }}</strong> — {{ tx(p, 'subtitle') }}
       <span *ngIf="p.urls && p.urls.length" class="pc-url">{{ p.urls[0].url }}</span>
     </div>
   </section>
